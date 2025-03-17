@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navBar">
+        <div class="navLinks">
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/sobrenos">SOBRE NÓS</a></li>
+                <li><a href="/contatos">CONTATOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="loginContainer">
+        <form class="loginForm">
+            <h1 class="text-center">Login</h1>
+            <br />
+            <input type="email" placeholder="Email" name="email" class="form-control mb-3" required />
+            <input type="password" placeholder="Senha" name="senha" class="form-control mb-3" required />
+            <br />
+            <button type="submit" class="botaoVerde">Login</button>
+            <p class="text-center mt-3"><a class="primeiroAcesso" href="/pages/primeiroAcesso.html">Não possui uma conta? Cadastre-se!</a></p>
+        </form>
+    </div>
+
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+            scroll-behavior: smooth;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        nav {
+            background-color: #333;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100px; 
+        }
+        
+        .navLinks ul {
+            list-style: none;
+            padding: 0;
+            display: flex; 
+            justify-content: center; 
+            margin: 0;
+        }
+        
+        .navLinks ul li {
+            padding: 8px 16px;
+        }
+        
+        .navLinks ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .navLinks ul li a:hover {
+            color: #28a745; 
+        }
+
+        .loginContainer {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .loginContainer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/data/imagem.webp'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            filter: blur(8px) contrast(0.5) brightness(0.5);
+            z-index: -1;
+        }
+
+        .loginForm {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 30px;
+            padding: 32px;
+            width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botaoVerde {
+            border: none;
+            padding: 12px 0;
+            background-color: #28a745;
+            border-radius: 12px;
+            width: 180px;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .botaoVerde:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: block;
+            margin: 6px 0;
+            padding: 12px;
+            width: 100%;
+            height: 45px;
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+            font-size: 1.8vh;
+
+        }
+
+        a:hover{
+            color: #28a745; 
+        }
+        
+    </style>
+</body>
+</html>
