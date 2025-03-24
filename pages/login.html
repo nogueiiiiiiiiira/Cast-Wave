@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6-beta.38/inputmask.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -12,22 +13,22 @@
     <nav class="navBar">
         <div class="navLinks">
             <ul>
-                <li><a href="/">HOME</a></li>
-                <li><a href="/sobrenos">SOBRE NÓS</a></li>
-                <li><a href="/contatos">CONTATOS</a></li>
+                <li><a href="./home.html">HOME</a></li>
+                <li><a href="./sobreNos.html">SOBRE NÓS</a></li>
+                <li><a href="./contatos.html">CONTATOS</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="loginContainer">
         <form class="loginForm">
-            <h1 class="text-center">Login</h1>
+            <h2 class="text-center">Login</h2>
             <br />
             <input type="email" placeholder="Email" name="email" class="form-control mb-3" required />
             <input type="password" placeholder="Senha" name="senha" class="form-control mb-3" required />
             <br />
             <button type="submit" class="botaoVerde">Login</button>
-            <p class="text-center mt-3"><a class="primeiroAcesso" href="/pages/primeiroAcesso.html">Não possui uma conta? Cadastre-se!</a></p>
+            <p class="text-center mt-3"><a class="cadastro" href="/pages/cadastro.html">Não possui uma conta? Cadastre-se!</a></p>
         </form>
     </div>
 
