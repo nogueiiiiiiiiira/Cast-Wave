@@ -55,17 +55,11 @@
     </div>
 
     <style>
-
         * {
             padding: 0;
             margin: 0;
             scroll-behavior: smooth;
             font-family: 'Helvetica Neue', sans-serif;
-        }
-
-        body {
-            overflow: hidden;
-            height: 100%;
         }
         
 
@@ -131,7 +125,7 @@
         
         .contactForm {
             width: 400px;
-            height: 70vh;
+            height: 75vh;
             padding: 40px;
             background-color: #28a745;
             border: 1px solid #ddd;
@@ -140,12 +134,13 @@
             align-items: center;
             color: white;
             border-radius: 20px 0 0 20px;
+            
               
           }
         
           .contactForm2 {
             width: 400px;
-            height: 70vh;
+            height: 75vh;
             padding: 40px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -197,13 +192,36 @@
             background-color: #218838;
             transform: scale(1.05);
           }
-        
-          .row{
-            display: flex;
-            flex-direction: row;
-            margin-bottom: auto;
-          }
 
+          @media (max-width: 850px) {
+            .contact {
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 20px;
+                margin-top: 50px; 
+                position: relative;
+            }
+        
+            .contact::before {
+                height: 100vh; 
+                width: 100%;
+                position: fixed; 
+            }
+        
+            .contactForm, .contactForm2 {
+                width: 90%;
+                border-radius: 20px;
+                margin-bottom: 20px; 
+                position: relative;
+                z-index: 2;
+            }
+        
+            .contactForm2 button[type="submit"] {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+        
     </style>
 
 </body>

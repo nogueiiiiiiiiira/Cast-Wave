@@ -10,15 +10,15 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">-- SEJA BEM-VINDO À CASTWAVE --</h1>
+        <h1 class="title">SEJA BEM-VINDO À CASTWAVE!</h1>
         <h2 class="subtitle">Somos um grupo que busca disponibilizar entretenimento e cultura para a comunidade!</h2>
         <div class="buttons">
             <button class="botaoVerde" onclick="window.location.href='/pages/login.html';">Login</button>
             <button class="botaoVerde" onclick="window.location.href='/pages/cadastro.html';">Cadastre-se</button>
         </div>
-        
+    </div>
 
-      <style>
+    <style>
 
         .container {
             display: flex;
@@ -31,8 +31,8 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-          }
-          
+        }
+        
         .container::before{
             content: '';
             position: absolute;
@@ -47,24 +47,26 @@
             filter: blur(8px) contrast(0.5) brightness(0.5); 
             z-index: -1; 
         }
-          .title {
+
+        .title {
             font-size: 2.5rem;
             margin-bottom: 10vh;
-          }
-          
-          .subtitle {
+            text-align: center;
+        }
+
+        .subtitle {
             font-size: 1.5rem;
             margin-bottom: 10vh;
-          }
+            text-align: center;
+        }
 
-                    
         .buttons {
             display: flex;
             gap: 1rem;
             text-decoration: none;
         }
-          
-          .botaoVerde {
+
+        .botaoVerde {
             border: none;
             padding: 12px 0;
             background-color: #28a745;
@@ -82,8 +84,8 @@
             background-color: #218838;
             transform: scale(1.05);
         }
-          
-          .background {
+
+        .background {
             position: absolute;
             top: 0;
             left: 0;
@@ -91,14 +93,31 @@
             height: 100%;
             z-index: -1;
             opacity: 0.2;
-          }
-          
-          .background img {
+        }
+
+        .background img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .title, .subtitle {
+                font-size: 1.5rem;
+                margin-bottom: 5vh;
+            }
           }
 
-      </style>
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+        }
+    </style>
 </body>
 </html>

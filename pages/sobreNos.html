@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nós - CastWave</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6-beta.38/inputmask.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
     <nav class="navBar">
         <div class="navLinks">
             <ul>
@@ -18,11 +20,11 @@
             </ul>
         </div>
     </nav>
-
+    
     <div class="sobreNosContainer">
         <br>
+        <h1 class="h1">CASTWAVE</h1>
         <br>
-        <h1 class="h1">CastWave</h1>
         <div class="container">
             <div class="card">
                 <div class="cardIcon">
@@ -46,10 +48,11 @@
                 <p class="cardText">Nossa equipe é composta por funcionários dedicados que promovem a cultura e entretenimento para a comunidade.</p>
             </div>
         </div>
-        
+
         <br>
         <br>
-        <h1 class="h1">Colaboradores</h1>
+        <h1 class="h1">COLABORADORES</h1>
+        <br>
         <div class="container">
             <div class="card">
                 <div class="cardIcon">
@@ -57,51 +60,41 @@
                 </div>
                 <h2 class="cardTitle">João Picoli</h2>
                 <p class="cardText">"O cinema é a janela para diferentes mundos, histórias e emoções que nos transformam."</p>
-                <div class="socialMedia">
-                    <a href="https://www.instagram.com/cleberleivas/" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
             </div>
-    
+
             <div class="card">
                 <div class="cardIcon">
                     <img src="../data/user.jpeg" alt="Imagem do fundador" class="roundedImage">
                 </div>
                 <h2 class="cardTitle">Karen Nogueira</h2>
                 <p class="cardText">"Os filmes nos permitem sonhar acordados e viver mil vidas em apenas algumas horas."</p>
-                <div class="socialMedia">
-                    <a href="https://www.instagram.com/karenzyxg/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <style>
-    
         * {
             padding: 0;
             margin: 0;
             scroll-behavior: smooth;
             font-family: 'Helvetica Neue', sans-serif;
+            box-sizing: border-box;
         }
-    
+
         nav {
             background-color: #333;
             padding: 15px 0;
             display: flex;
             justify-content: center; 
             align-items: center; 
-            height: 100px; 
         }
         
         .navLinks ul {
             list-style: none;
             padding: 0;
-            display: flex; 
-            justify-content: center; 
+            display: flex;
+            justify-content: center;
             margin: 0;
         }
         
@@ -119,20 +112,18 @@
         .navLinks ul li a:hover {
             color: #28a745; 
         }
-    
+
         .sobreNosContainer {
             width: 100%;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             flex-direction: column;
             position: relative;
+            padding: 20px;
         }
-    
+
         .sobreNosContainer::before {
             content: '';
             position: absolute;
@@ -147,44 +138,34 @@
             filter: blur(8px) contrast(0.5) brightness(0.5);
             z-index: -1;
         }
-    
+
         .container {
             width: 100%;
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
             position: relative;
         }
-    
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    
+
         .card {
-            background-image: linear-gradient(to bottom, #ffffff 0%, #aaaaaa 100%);
-            background-color: white;
-            border-radius: 30px;
+            background: linear-gradient(to bottom, #ffffff 0%, #aaaaaa 100%);
+            border-radius: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
-            width: 300px; 
-            height: 40vh;
+            width: 300px;
+            height: auto;
             transition: 0.2s;
-            margin: 20px;
         }
-    
+
         .card:hover {
             transform: scale(1.05);
         }
-    
+
         .cardIcon {
             font-size: 3em;
-            color: #007BFF; 
+            color: #007BFF;
             margin-bottom: 15px;
         }
         
@@ -198,33 +179,42 @@
             color: #666;
             line-height: 1.6;
         }
-    
+
         .h1 {
             color: #28a745; 
-            display: flex;
-            margin-bottom: 5vh;
-            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
         }
-    
+
         .roundedImage {
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
             transition: transform 0.3s ease-in-out;
         }
-    
+
         .roundedImage:hover {
             transform: scale(1.2);
         }
-    
-        .socialMedia a {
-            color: #007BFF;
-            font-size: 1.5em;
-        }
 
+
+        @media (max-width: 768px) {
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 90%;
+            }
+
+            .h1 {
+                font-size: 1.8em;
+            }
+        }
     </style>
     
 </body>
 </html>
-
