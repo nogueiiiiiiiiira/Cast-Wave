@@ -30,7 +30,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 <input
-                  name="email"
+                  id="email"
                   type="email"
                   placeholder="Email"
                   class="form-control"
@@ -41,7 +41,7 @@
               <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                 <input
-                  name="senha"
+                  id="senha"
                   type="password"
                   placeholder="Senha"
                   class="form-control"
@@ -195,8 +195,41 @@
         a:hover{
             color: #28a745; 
         }
-
   
     </style>
+
+<script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validação básica
+        let isValid = true;
+        ['nome', 'cpf', 'email', 'senha'].forEach(field => {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                input.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                input.style.borderColor = '#ccc';
+            }
+        });
+        
+        if (!isValid) {
+            alert('Preencha todos os campos obrigatórios!');
+            return;
+        }
+        
+        // Simular resposta do servidor
+        const responseData = {
+            mensagem: "Cadastro realizado com sucesso!",
+            dados: {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value
+            }
+        };
+    });
+    
+  </script>
+
 </body>
 </html>
