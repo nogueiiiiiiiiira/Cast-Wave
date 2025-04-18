@@ -29,7 +29,7 @@
   </nav>
 
   <div class="bg-overlay">
-    <form class="form-container" id="cadastroForm">
+    <form class="form-container" id="loginForm" method="POST">
       <h2 class="text-center mb-4">Login</h2>
 
       <div class="mb-3 input-group">
@@ -136,7 +136,33 @@
 
   <script>
 
-  </script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault(); 
+    
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+    
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("senha", senha);
+    
+      const response = await fetch("login.php", {
+        method: "POST",
+        body: formData
+      });
+    
+      const result = await response.text();
+    
+      if (result === "success") {
+        window.location.href = "/projetoLocadora/pagina_principal.php";
+      } else {
+        alert(result);
+        document.getElementById("email").value = "";
+        document.getElementById("senha").value = "";
+      }
+    });
+    
+    </script>
   
 </body>
 </html>

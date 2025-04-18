@@ -54,7 +54,7 @@
 
       <div class="mb-3 input-group">
         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-        <input type="text" class="form-control" id="dataNasc" name="dataNasc" placeholder="Data de Nascimento" maxlength="10" required>
+        <input type="date" class="form-control" id="dataNasc" name="dataNasc" placeholder="Data de Nascimento" required>
       </div>
 
       <div class="mb-3 input-group">
@@ -160,6 +160,7 @@
   </style>
 
   <script>
+
     const cpf = document.getElementById("cpf");
     const telefone = document.getElementById("telefone");
     const dataNasc = document.getElementById("dataNasc");
@@ -179,13 +180,50 @@
       telefone.value = value;
     });
 
-    dataNasc.addEventListener("input", () => {
-      let value = dataNasc.value.replace(/\D/g, "").slice(0, 8);
-      value = value.replace(/(\d{2})(\d)/, "$1/$2");
-      value = value.replace(/(\d{2})(\d)/, "$1/$2");
-      dataNasc.value = value;
+    document.getElementById('cadastroForm').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const senha = document.getElementById('senha').value;
+      const senha2 = document.getElementById('senha2').value;
+
+      const senhaValida = validarSenha(senha);
+
+      if (!senhaValida) {
+        alert("A senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
+        return;
+      }
+
+      if (senha !== senha2) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      const dataFormatada = formatarData(dataNasc.value);
+
+      const formData = new FormData(e.target);
+      formData.set('dataNasc', dataFormatada); 
+
+      fetch('/projetoLocadora/cadastrar.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(r => r.text())
+      .then(alert);
     });
 
+    function validarSenha(senha) {
+      const temTamanhoMinimo = senha.length >= 8;
+      const temLetra = /[a-zA-Z]/.test(senha);
+      const temNumero = /[0-9]/.test(senha);
+      const temSimbolo = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
+      return temTamanhoMinimo && temLetra && temNumero && temSimbolo;
+    }
+
+    function formatarData(data) {
+      const partes = data.split('/');
+      return `${partes[2]}-${partes[1]}-${partes[0]}`; 
+    }
+  
   </script>
   
 </body>
