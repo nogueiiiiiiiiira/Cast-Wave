@@ -160,11 +160,10 @@
   </style>
 
   <script>
-
     const cpf = document.getElementById("cpf");
     const telefone = document.getElementById("telefone");
     const dataNasc = document.getElementById("dataNasc");
-
+  
     cpf.addEventListener("input", () => {
       let value = cpf.value.replace(/\D/g, "").slice(0, 11);
       value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -172,37 +171,40 @@
       value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
       cpf.value = value;
     });
-
+  
     telefone.addEventListener("input", () => {
       let value = telefone.value.replace(/\D/g, "").slice(0, 11);
       value = value.replace(/^(\d{2})(\d)/, "($1) $2");
       value = value.replace(/(\d{5})(\d)/, "$1-$2");
       telefone.value = value;
     });
-
+  
     document.getElementById('cadastroForm').addEventListener('submit', e => {
       e.preventDefault();
-
+  
       const senha = document.getElementById('senha').value;
       const senha2 = document.getElementById('senha2').value;
-
+  
       const senhaValida = validarSenha(senha);
-
+  
       if (!senhaValida) {
         alert("A senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
         return;
       }
-
+  
       if (senha !== senha2) {
         alert("As senhas não coincidem.");
         return;
       }
-
+  
       const dataFormatada = formatarData(dataNasc.value);
 
+      console.log(dataNasc, dataFormatada );
+
+  
       const formData = new FormData(e.target);
       formData.set('dataNasc', dataFormatada); 
-
+  
       fetch('/projetoLocadora/cadastrar.php', {
         method: 'POST',
         body: formData
@@ -210,7 +212,7 @@
       .then(r => r.text())
       .then(alert);
     });
-
+  
     function validarSenha(senha) {
       const temTamanhoMinimo = senha.length >= 8;
       const temLetra = /[a-zA-Z]/.test(senha);
@@ -218,13 +220,15 @@
       const temSimbolo = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
       return temTamanhoMinimo && temLetra && temNumero && temSimbolo;
     }
-
+  
     function formatarData(data) {
-      const partes = data.split('/');
-      return `${partes[2]}-${partes[1]}-${partes[0]}`; 
+      const partes = data.split('-'); 
+
+      return `${partes[0]}-${partes[1]}-${partes[2]}`; 
     }
   
   </script>
+  
   
 </body>
 </html>
