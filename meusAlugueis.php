@@ -29,19 +29,30 @@
 </div>
    
 <style>
-    body {
+
+        body {
             scroll-behavior: smooth;
             font-family: 'Roboto', sans-serif;
+            background-color: black;
+        }
+
+
+        #navbarNav ul {
+            margin-left: -7.5px;
+            transform: translateY(-1px);
         }
 
         #navbarNav ul li a {
-          text-decoration: none;
-          transition: color 0.3s;
+            text-decoration: none;
+            transition: color 0.3s;
+            margin: 20px 0; 
         }
+
 
         #navbarNav ul li a:hover {
             color: #28a745; 
         }
+
 
 </style>
 </body>

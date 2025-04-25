@@ -108,9 +108,9 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
 <br>
 
 <h1>CastWave</h1>
-<h2>Bem-vindo, <?php echo htmlspecialchars($usuario_nome); ?>!</h2>
-
 <br>
+<h4>Bem-vindo(a) novamente, <?php echo htmlspecialchars($usuario_nome); ?>!</h4>
+
 <br>
 
 <!-- exibe os filmes encontrados -->
@@ -118,21 +118,21 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
     <?php // verifica se há resultados
     if (isset($data['results'])) { // exibe os filmes
         foreach ($data['results'] as $filme): // verifica se o filme tem poster
-            $posterUrl = $filme['poster_path'] ? "https://image.tmdb.org/t/p/w200{$filme['poster_path']}" : 'caminho/para/imagem/default.jpg'; 
+            $posterUrl = $filme['poster_path'] ? "https://image.tmdb.org/t/p/original{$filme['poster_path']}" : 'caminho/para/imagem/default.jpg';
             $duration = isset($filme['runtime']) ? $filme['runtime'] . ' min' : 'Duração não disponível'; // verifica se o filme tem duração
             $preco = rand(10, 30);  // gera um preço aleatório entre 10 e 30 reais
     ?>
         <div class="card">
             <img src="<?php echo $posterUrl; ?>" alt="Poster"> 
             <br>
-            <h3><?php echo htmlspecialchars($filme['title']); ?></h3>
+            <h5><?php echo htmlspecialchars($filme['title']); ?></h5>
             <br>
             <p><strong>Nota: </strong><?php echo $filme['vote_average']; ?></p>
             <p><strong>Duração:</strong> <?php echo $duration; ?></p>
             <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p>
-            <div class="d-flex justify-content-between">
-                <a href="detalhes.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-info">Ver Detalhes</a>
-                <a href="aluguel.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-success">Alugar</a>
+            <div class="text-center mt-3">
+                <a href="detalhes.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-custom me-4">Detalhes</a>
+                <a href="aluguel.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-custom">Alugar</a>
             </div>
         </div>
     <?php 
@@ -161,7 +161,8 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
     
     ?>
 </div>
-
+<br>
+<br>
 
 <style>
 
@@ -180,7 +181,7 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             color: #28a745; 
         }
 
-        h1, h2 {
+        h1, h4 {
             text-align: center;
             color: #28a745; 
         }
@@ -227,15 +228,23 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             gap: 15px;
         }
 
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
         .card {
-            width: 18rem;
-            height: 800px; 
+            width: 20rem;
+            height: 700px; 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: white;
+            background: #212529; 
+            color: white; 
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
             padding: 10px;
@@ -243,8 +252,36 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
 
         .card img {
             width: 100%;
-            height: 400px;
+            height: 400px; /
             object-fit: cover;
+        }
+
+        .card h4, .card p {
+            color: #ecf0f1; 
+        }
+
+        .card p strong {
+            color: #28a745; 
+        }
+
+        .card .d-flex {
+            display: flex;
+            justify-content: center;
+            margin-top: auto; 
+        }
+
+        .card .btn-custom {
+            background-color: #343a40; 
+            color: #28a745; 
+            border: 1px solid #28a745; 
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card .btn-custom:hover {
+            background-color: #28a745;
+            color: white;
         }
 
         .paginacao {
@@ -275,7 +312,7 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
         }
 
         .paginacao a.numero {
-            background-color: #212529; 
+            background-color: #343a40; 
             color: #28a745;
             border: 1px solid #28a745;
         }
@@ -290,6 +327,7 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             color: white;
             border: 1px solid #1e7e34;
         }
+
 
     </style>
 

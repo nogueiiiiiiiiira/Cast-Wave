@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Minha Conta</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-light">
-
+<body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
@@ -25,94 +27,158 @@
   </div>
 </nav>
 
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card shadow rounded-4 p-4">
-          <h3 class="text-center mb-4"><i class="fa-solid fa-user-circle me-2"></i>Minha Conta</h3>
-          
-          <form>
-            <div class="mb-3">
-              <label for="nome" class="form-label">Nome completo</label>
-              <input type="text" class="form-control" id="nome">
-            </div>
-
-            <div class="mb-3">
-              <label for="email" class="form-label">E-mail</label>
-              <input type="email" class="form-control" id="email">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Data de cadastro</label>
-              <input type="text" class="form-control" disabled>
-            </div>
-
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary">Salvar alterações</button>
-            </div>
-          </form>
-
-          <hr class="my-4">
-
-          <h5><i class="fa-solid fa-key me-2"></i>Alterar Senha</h5>
-          <form>
-            <div class="mb-3">
-              <input type="password" class="form-control" placeholder="Senha atual">
-            </div>
-            <div class="mb-3">
-              <input type="password" class="form-control" placeholder="Nova senha">
-            </div>
-            <div class="mb-3">
-              <input type="password" class="form-control" placeholder="Confirmar nova senha">
-            </div>
-
-            <div class="d-grid gap-2">
-              <button class="btn btn-warning">Alterar senha</button>
-            </div>
-          </form>
-
-          <hr class="my-4">
-
-          <div class="text-center">
-            <button class="btn btn-outline-danger" onclick="confirmarExclusao()">
-              <i class="fa-solid fa-trash me-2"></i>Excluir minha conta
-            </button>
+<div class="container mt-4">
+  <div class="card" style="max-width: 800px; margin: 0 auto;">
+    <div class="card-header text-center">
+      <i class="fa-solid fa-user-circle me-2"></i>Minha Conta
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome completo</label>
+          <div class="d-flex">
+            <input disabled type="text" class="form-control" id="nome">
           </div>
         </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <div class="d-flex">
+            <input disabled type="email" class="form-control" id="email">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Data de cadastro</label>
+          <input type="text" class="form-control" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+          <div class="d-flex">
+            <input disabled type="password" class="form-control" id="senha">
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-custom">
+            <i class="fa-solid fa-save me-2"></i>Editar minha conta
+          </button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <button class="btn btn-custom" onclick="confirmarExclusao()">
+          <i class="fa-solid fa-trash me-2"></i>Excluir minha conta
+        </button>
       </div>
     </div>
   </div>
+</div>
 
-  <style>
+<style>
 
-      body {
-            scroll-behavior: smooth;
-            font-family: 'Roboto', sans-serif;
-        }
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: black;
+  }
 
-        #navbarNav ul li a {
-          text-decoration: none;
-          transition: color 0.3s;
-        }
+  #navbarNav ul {
+    transform: translateY(-0.5px);
+    margin-left: -7.5px;
+  }
 
-        #navbarNav ul li a:hover {
-            color: #28a745; 
-        }
+  #navbarNav ul li a {
+    text-decoration: none;
+    transition: color 0.3s;
+    margin: 19px 0; 
+  }
 
+  #navbarNav ul li a:hover {
+    color: #28a745; 
+  }
 
-  </style>
+  .btn {
+    color: white !important;
+    border: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
 
-  <script>
-    function confirmarExclusao() {
-      if (confirm("Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.")) {
+  .btn:hover {
+    transform: scale(1.05);
+  }
+        
+  .card {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-        // back para ser feito
+  .card .btn-custom {
+    background-color: #343a40; 
+    color: #28a745; 
+    border: 1px solid #28a745; 
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
 
-        alert("Conta excluída com sucesso.");
-        window.location.href = "/projetoLocadora/login.html"; 
-      }
+  .card .btn-custom:hover {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .card-header {
+    background-color: #28a745;
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .text-center {
+    margin-top: 20px;
+  }
+
+  .card-body {
+    padding: 25px;
+  }
+
+  .navbar-nav a {
+    transition: all 0.3s ease;
+  }
+
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .d-flex input {
+    flex-grow: 1;
+  }
+
+  .d-flex button {
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  function confirmarExclusao() {
+    if (confirm("Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.")) {
+      alert("Conta excluída com sucesso.");
+      window.location.href = "/projetoLocadora/login.html"; 
     }
-  </script>
+  }
+</script>
 
 </body>
 </html>
