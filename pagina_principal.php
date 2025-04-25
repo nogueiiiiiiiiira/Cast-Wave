@@ -241,7 +241,7 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: #212529; 
+            background-color: #212529; 
             color: white; 
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);

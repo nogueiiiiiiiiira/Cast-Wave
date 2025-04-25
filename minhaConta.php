@@ -27,6 +27,9 @@
   </div>
 </nav>
 
+<br>
+<br>
+
 <div class="container mt-4">
   <div class="card" style="max-width: 800px; margin: 0 auto;">
     <div class="card-header text-center">
@@ -59,6 +62,9 @@
             <input disabled type="password" class="form-control" id="senha">
           </div>
         </div>
+
+        <br>
+        <br>
 
         <div class="text-center mt-3">
           <button type="submit" class="btn btn-custom">
@@ -111,8 +117,9 @@
         
   .card {
     border-radius: 10px;
-    background-color: white;
+    background-color: #212529;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
   }
 
   .card .btn-custom {
@@ -169,6 +176,13 @@
   .d-flex button {
     flex-shrink: 0;
   }
+
+  input{
+    background-color: #e2e8f0;
+    color: white;
+    border: 1px solid #28a745;
+  }
+
 </style>
 
 <script>
