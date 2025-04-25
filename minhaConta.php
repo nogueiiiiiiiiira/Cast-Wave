@@ -35,35 +35,35 @@
     <div class="card-header text-center">
       <i class="fa-solid fa-user-circle me-2"></i>Minha Conta
     </div>
+
+    <br>
     <div class="card-body">
       <form>
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome completo</label>
-          <div class="d-flex">
-            <input disabled type="text" class="form-control" id="nome">
-          </div>
-        </div>
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input type="text" class="form-control" id="nome" name="nome" disabled>
+      </div>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail</label>
-          <div class="d-flex">
-            <input disabled type="email" class="form-control" id="email">
-          </div>
-        </div>
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        <input type="email" class="form-control" id="email" name="email" disabled>
+      </div>
 
-        <div class="mb-3">
-          <label class="form-label">Data de cadastro</label>
-          <input type="text" class="form-control" disabled>
-        </div>
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+        <input type="text" class="form-control" disabled>
+      </div>
 
-        <div class="mb-3">
-          <label for="senha" class="form-label">Senha</label>
-          <div class="d-flex">
-            <input disabled type="password" class="form-control" id="senha">
-          </div>
-        </div>
+        <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+        <input type="text" class="form-control" id="telefone" name="telefone" disabled>
+      </div>
 
-        <br>
+        <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input type="password" class="form-control" id="senha" name="senha" disabled>
+      </div>
+
         <br>
 
         <div class="text-center mt-3">
@@ -147,10 +147,10 @@
     font-weight: 600;
   }
 
-  .form-control {
-    border-radius: 8px;
-    padding: 12px;
-  }
+  .form-control:focus {
+      box-shadow: none;
+      border-color: #28a745;
+    }
 
   .text-center {
     margin-top: 20px;
@@ -177,11 +177,13 @@
     flex-shrink: 0;
   }
 
-  input{
-    background-color: #e2e8f0;
-    color: white;
-    border: 1px solid #28a745;
+  .mt-4{
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 450px;
   }
+
 
 </style>
 
