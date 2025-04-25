@@ -133,6 +133,7 @@
   </style>
 
   <script>
+
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
       e.preventDefault(); 
     
@@ -140,22 +141,22 @@
       const senha = document.getElementById("senha").value;
     
       const formData = new FormData();
-      formData.append("email", email);
-      formData.append("senha", senha);
+      formData.append("email", email); // adiciona o email ao FormData
+      formData.append("senha", senha); // adiciona a senha ao FormData
     
-      const response = await fetch("/projetoLocadora/login.php", {
+      const response = await fetch("/projetoLocadora/login.php", { // esperando o retorno do PHP
           method: "POST",
           body: formData
       });
     
       const result = await response.text(); 
     
-      if (result === "success") {
-          window.location.href = "./projetoLocadora/pagina_principal.php"; 
-      } else {
+      if (result === "success") { // se o login for bem-sucedido...
+          window.location.href = "./projetoLocadora/pagina_principal.php"; // redireciona para a página principal
+      } else { // se o login falhar...
           alert(result); 
-          document.getElementById("email").value = "";
-          document.getElementById("senha").value = "";
+          document.getElementById("email").value = ""; // limpa o campo de email
+          document.getElementById("senha").value = ""; // limpa o campo de senha
       }
   });
   

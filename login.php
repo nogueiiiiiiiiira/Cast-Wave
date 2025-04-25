@@ -1,4 +1,6 @@
 <?php
+
+// inicia a sessão para armazenar dados do usuário
 session_start();
 
 $host = "localhost";
@@ -6,28 +8,36 @@ $usuario = "root";
 $senha = "";      
 $banco = "castwave"; 
 
+// conexão com o banco de dados
 $conn = new mysqli($host, $usuario, $senha, $banco);
 
+// verifica se houve erro na conexão
 if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// verifica se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] === "POST") { // verifica se o método é POST
+    // obtém os dados do formulário
     $email = $_REQUEST["email"] ?? '';
     $senha = $_REQUEST["senha"] ?? '';
 
+    // validação dos campos
     $email = $conn->real_escape_string($email);
 
+    // verifica se os campos obrigatórios estão preenchidos
     $sql = "SELECT id, senha FROM usuarios WHERE email = '$email'";
-    $resultado = $conn->query($sql);
+    $resultado = $conn->query($sql); // executa a consulta SQL
 
     if (!$resultado) {
         die("Erro na consulta: " . $conn->error);
     }
 
-    if ($resultado->num_rows === 1) {
-        $usuario = $resultado->fetch_assoc();
+    // verifica se o usuário existe
+    if ($resultado->num_rows === 1) { // num_rows retorna o número de linhas do resultado
+        $usuario = $resultado->fetch_assoc(); // obtém os dados do usuário
 
+        // verifica se a senha está correta
         if (password_verify($senha, $usuario["senha"])) {
             $_SESSION["usuario_id"] = $usuario["id"];
             echo "success";

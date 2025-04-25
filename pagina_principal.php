@@ -1,33 +1,72 @@
 <?php
 session_start();
 
+// verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: login.php'); 
     exit();
 }
 
+// conexão com o banco de dados 
+$servername = "localhost"; 
+$username = "root";  
+$password = ""; 
+$dbname = "castwave";  
+
+// criação da conexão
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// verificação de conexão
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
+}
+
+// obtém o ID do usuário da sessão
+$usuario_id = $_SESSION['usuario_id'];
+
+// consulta SQL para obter o nome do usuário
+$sql = "SELECT nome FROM usuarios WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $usuario_id);
+$stmt->execute();
+$stmt->bind_result($usuario_nome);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+
+// caso o nome não seja encontrado
+if (!$usuario_nome) {
+    $usuario_nome = "Usuário desconhecido";
+}
+
+// configuração da API do TMDB
 $apiKey = "7d76651465970372fcd6d406b5b325ee";
 $paginaAtual = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 $pesquisa = isset($_GET['busca']) ? urlencode($_GET['busca']) : '';
 $baseUrl = "https://api.themoviedb.org/3/";
 
+// verifica se a pesquisa foi feita
 if ($pesquisa) {
     $url = $baseUrl . "search/movie?api_key=$apiKey&language=pt-BR&query=$pesquisa&page=$paginaAtual";
 } else {
     $url = $baseUrl . "discover/movie?api_key=$apiKey&language=pt-BR&sort_by=popularity.desc&page=$paginaAtual";
 }
 
+// faz a requisição para a API
 $response = @file_get_contents($url);
 if ($response === FALSE) {
     die("Erro ao tentar recuperar dados da API.");
 }
+
+// decodifica a resposta JSON
 $data = json_decode($response, true);
 $totalPages = min($data['total_pages'], 100); // limite de 100 páginas
 
-function paginaLink($i, $paginaAtual, $pesquisa) {
-    $active = ($i == $paginaAtual) ? 'active' : '';
-    $buscaQuery = $pesquisa ? "&busca=" . urlencode($pesquisa) : '';
-    return "<a href='?pagina=$i$buscaQuery' class='numero $active'>$i</a>";
+// função para gerar os links de paginação
+function paginaLink($i, $paginaAtual, $pesquisa) { 
+    $active = ($i == $paginaAtual) ? 'active' : ''; // verifica se a página atual é a mesma do link
+    $buscaQuery = $pesquisa ? "&busca=" . urlencode($pesquisa) : ''; // verifica se a pesquisa foi feita
+    return "<a href='?pagina=$i$buscaQuery' class='numero $active'>$i</a>"; // gera o link
 }
 
 ?>
@@ -69,21 +108,22 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
 <br>
 
 <h1>CastWave</h1>
-<h2>Bem-vindo, <?php echo htmlspecialchars($_SESSION['usuario']); ?>!</h2>
+<h2>Bem-vindo, <?php echo htmlspecialchars($usuario_nome); ?>!</h2>
 
 <br>
 <br>
 
+<!-- exibe os filmes encontrados -->
 <div class="card-container">
-    <?php 
-    if (isset($data['results'])) {
-        foreach ($data['results'] as $filme): 
-            $posterUrl = $filme['poster_path'] ? "https://image.tmdb.org/t/p/w200{$filme['poster_path']}" : 'caminho/para/imagem/default.jpg';
-            $duration = isset($filme['runtime']) ? $filme['runtime'] . ' min' : 'Duração não disponível';
-            $preco = rand(10, 30); 
+    <?php // verifica se há resultados
+    if (isset($data['results'])) { // exibe os filmes
+        foreach ($data['results'] as $filme): // verifica se o filme tem poster
+            $posterUrl = $filme['poster_path'] ? "https://image.tmdb.org/t/p/w200{$filme['poster_path']}" : 'caminho/para/imagem/default.jpg'; 
+            $duration = isset($filme['runtime']) ? $filme['runtime'] . ' min' : 'Duração não disponível'; // verifica se o filme tem duração
+            $preco = rand(10, 30);  // gera um preço aleatório entre 10 e 30 reais
     ?>
         <div class="card">
-            <img src="<?php echo $posterUrl; ?>" alt="Poster">
+            <img src="<?php echo $posterUrl; ?>" alt="Poster"> 
             <br>
             <h3><?php echo htmlspecialchars($filme['title']); ?></h3>
             <br>
@@ -96,7 +136,7 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             </div>
         </div>
     <?php 
-        endforeach;
+        endforeach; // fecha o foreach, que percorre os filmes
     } else {
         echo "Nenhum filme encontrado.";
     }
@@ -105,17 +145,17 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
 
 <div class="paginacao">
     <?php
-    $buscaQuery = $pesquisa ? "&busca=" . urlencode($pesquisa) : '';
+    $buscaQuery = $pesquisa ? "&busca=" . urlencode($pesquisa) : ''; // verifica se a pesquisa foi feita
 
     if ($paginaAtual > 1) {
         echo "<a href='?pagina=" . ($paginaAtual - 1) . "$buscaQuery' class='navegacao'>Anterior</a>";
     }
     
-    for ($i = max(1, $paginaAtual - 2); $i <= min($totalPages, $paginaAtual + 2); $i++) {
+    for ($i = max(1, $paginaAtual - 2); $i <= min($totalPages, $paginaAtual + 2); $i++) { // gera os links de paginação
         echo paginaLink($i, $paginaAtual, $pesquisa);
     }
     
-    if ($paginaAtual < $totalPages) {
+    if ($paginaAtual < $totalPages) { // verifica se há próxima página
         echo "<a href='?pagina=" . ($paginaAtual + 1) . "$buscaQuery' class='navegacao'>Próxima</a>";
     }
     
@@ -250,8 +290,6 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             color: white;
             border: 1px solid #1e7e34;
         }
-
-
 
     </style>
 
