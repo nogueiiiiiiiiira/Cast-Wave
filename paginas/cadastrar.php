@@ -53,7 +53,7 @@ $sql = "INSERT INTO usuarios (nome, cpf, email, telefone, dataNasc, senha) VALUE
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssss", $nome, $cpf, $email, $telefone, $dataNasc, $senhaHash);
 
-if ($stmt->execute()) {
+if ($stmt->execute()) { // executa a consulta
     echo "Cadastro realizado com sucesso!";
 } else {
     echo "Erro ao cadastrar: " . $stmt->error;

@@ -26,8 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // verifica se o método é POST
     $email = $conn->real_escape_string($email);
 
     // verifica se os campos obrigatórios estão preenchidos
-    $sql = "SELECT id, senha FROM usuarios WHERE email = '$email'";
-    $resultado = $conn->query($sql); // executa a consulta SQL
+    $stmt = $conn->prepare("SELECT id, senha FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    
+    // Obtém o resultado diretamente do prepared statement
+    $resultado = $stmt->get_result();
 
     if (!$resultado) {
         die("Erro na consulta: " . $conn->error);

@@ -1,0 +1,99 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: black;
+}
+
+#navbarNav ul {
+    transform: translateY(-0.5px);
+    margin-left: -7.5px;
+}
+
+#navbarNav ul li a {
+    text-decoration: none;
+    transition: color 0.3s;
+    margin: 19px 0;
+}
+
+#navbarNav ul li a:hover {
+    color: #28a745;
+}
+
+.btn {
+    color: white !important;
+    border: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.card {
+    border-radius: 10px;
+    background-color: #212529;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.card .btn-custom {
+    background-color: #343a40;
+    color: #28a745;
+    border: 1px solid #28a745;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card .btn-custom:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.card-header {
+    background-color: #28a745;
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #28a745;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.navbar-nav a {
+    transition: all 0.3s ease;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.d-flex input {
+    flex-grow: 1;
+}
+
+.d-flex button {
+    flex-shrink: 0;
+}
+
+.mt-4 {
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 450px;
+}
