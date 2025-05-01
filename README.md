@@ -31,6 +31,12 @@
 
 ---
 
+## Inicie:
+
+- Digite: `http://localhost/projetoLocadora/index.html`
+
+---
+
 ## ⚙️ Requisitos para Executar o Projeto
 
 1. **Servidor Local**
@@ -66,3 +72,4 @@ CREATE TABLE IF NOT EXISTS alugueis (
     data_devolucao DATE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
