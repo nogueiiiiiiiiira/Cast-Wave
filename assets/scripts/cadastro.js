@@ -19,6 +19,7 @@ telefone.addEventListener("input", () => {
 });
 
 document.getElementById('cadastroForm').addEventListener('submit', e => {
+    e.preventDefault();
 
     const senha = document.getElementById('senha').value;
     const senha2 = document.getElementById('senha2').value;
@@ -40,12 +41,17 @@ document.getElementById('cadastroForm').addEventListener('submit', e => {
     const formData = new FormData(e.target); // cria um objeto FormData com os dados do formulário
     formData.set('dataNasc', dataFormatada); // adiciona a data formatada ao FormData
 
-    fetch('/projetoLocadora/cadastrar.php', { // envia os dados para o servidor
+    fetch('../paginas/cadastrar.php', { // envia os dados para o servidor
         method: 'POST',
         body: formData // envia os dados do formulário
     })
-        .then(r => r.text()) // espera a resposta do servidor
-        .then(alert); // exibe a resposta em um alerta
+
+    .then(r => r.text()) // espera a resposta do servidor
+    .then(alert) // exibe a resposta em um alerta
+    .then(() => {
+        // limpa os campos do formulário
+        e.target.reset();
+    });
 });
 
 function validarSenha(senha) {

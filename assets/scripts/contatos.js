@@ -6,3 +6,14 @@ telefone.addEventListener("input", () => {
     value = value.replace(/(\d{5})(\d)/, "$1-$2"); // adicionar hífen
     telefone.value = value; // atualiza o valor do input
 });
+
+document.getElementById("contactForm2").addEventListener("submit", function (event) {
+    const confirmar = confirm("Tem certeza que deseja enviar o formulário?");
+    if (!confirmar) {
+        event.preventDefault(); 
+    }
+
+    else {
+        alert("Formulário enviado com sucesso!");
+    }
+});
