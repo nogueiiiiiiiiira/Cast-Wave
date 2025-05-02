@@ -64,6 +64,18 @@ if ($response === FALSE) {
 $data = json_decode($response, true);
 $totalPages = min($data['total_pages'], 100); 
 
+// requisição para obter a lista de gêneros (usado para mostrar os nomes no card)
+$generosResponse = @file_get_contents("https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey&language=pt-BR");
+$generosData = json_decode($generosResponse, true);
+
+// cria um mapa associativo [id => nome]
+$generosMap = [];
+if (isset($generosData['genres'])) {
+    foreach ($generosData['genres'] as $genero) {
+        $generosMap[$genero['id']] = $genero['name'];
+    }
+}
+
 // função para gerar os links de paginação
 function paginaLink($i, $paginaAtual, $pesquisa) { 
     $active = ($i == $paginaAtual) ? 'active' : ''; // verifica se a página atual é a mesma do link
@@ -102,8 +114,8 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
       </ul>
       <form class="d-flex" method="get" action="">
         <input class="form-control me-2" type="search" name="busca" placeholder="Buscar filme..." value="<?php echo isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : ''; ?>">
-        <button class="btn btn-custom" type="submit">Buscar</button>
-      </form>
+        <button class="btn btn-custom me-4" type="submit">Buscar</button>
+    </form>
     </div>
   </div>
 </nav>
@@ -125,21 +137,38 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             $preco = rand(10, 30);  // gera um preço aleatório entre 10 e 30 reais
             $filme_id = $filme['id'];
     ?>
-        <div class="card">
-            <img src="<?php echo $posterUrl; ?>" alt="Poster"> 
-            <br>
-            <h5><?php echo htmlspecialchars($filme['title']); ?></h5>
-            <p><strong>Nota do Público: </strong><?php echo $filme['vote_average']; ?></p>
-            <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p>
-            <form class="alugarForm" action="../paginas/aluguel.php" method="POST">
+    <div class="card">
+        <img src="<?php echo $posterUrl; ?>" alt="Poster"> 
+        <br>
+        <h5><?php echo htmlspecialchars($filme['title']); ?></h5>
+        <br>
+        <?php
+            // converte os IDs dos gêneros em nomes
+            $generosNomes = array_map(function ($id) use ($generosMap) {
+                return $generosMap[$id] ?? 'Desconhecido';
+            }, $filme['genre_ids']);
+        ?>
+        <p><strong>Gênero:</strong> <?php echo implode(', ', $generosNomes); ?></p>
+        <p><strong>Nota do Público: </strong><?php echo $filme['vote_average']; ?></p>
+        <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p>
+        
+        <form class="alugarForm" action="../paginas/aluguel.php" method="POST">
             <input type="hidden" name="preco" value="<?php echo $preco; ?>">
-                <input type="hidden" name="nome_filme" value="<?php echo htmlspecialchars($filme['title']); ?>">
-                <input type="hidden" name="filme_id" value="<?php echo $filme_id; ?>">
-                <button type="submit" class="btn btn-custom me-4" id="alugarBtn">Alugar</button>
-                <a href="detalhes.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-custom me-4">Detalhes</a>
-            </form>
-
-        </div>
+            <input type="hidden" name="nome_filme" value="<?php echo htmlspecialchars($filme['title']); ?>">
+            <input type="hidden" name="filme_id" value="<?php echo $filme_id; ?>">
+            <input type="hidden" name="generos" value="<?php echo implode(',', $filme['genre_ids']); ?>">
+            <button type="submit" class="btn btn-custom me-4" id="alugarBtn">Alugar</button>
+            <button 
+                type="button" 
+                class="btn btn-custom me-4" 
+                data-bs-toggle="modal" 
+                data-bs-target="#detalhesModal"
+                onclick="mostrarDetalhes('<?php echo $filme_id; ?>', '<?php echo htmlspecialchars(addslashes($filme['title'])); ?>', '<?php echo implode(', ', $generosNomes); ?>', '<?php echo addslashes($filme['overview']); ?>')"
+            >
+                Detalhes
+            </button>
+        </form>
+    </div>
     <?php endforeach; } ?>
 
 </div>
@@ -164,6 +193,30 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
 </div>
 <br>
 <br>
+
+<div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Filme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="modalTitulo"></h4>
+                <p><strong>Gêneros:</strong> <span id="modalGeneros"></span></p>
+                <p><strong>Data de Lançamento:</strong> <span id="modalDataLancamento"></span></p>
+                <p><strong>Resumo:</strong> <span id="modalResumo"></span></p>
+
+                <p id="trailerLink" class="d-none">
+                    <strong>Trailer:</strong> <a id="trailerUrl" href="#" target="_blank">Assistir no YouTube</a>
+                </p>
+
+                <p><strong>Classificação Indicativa:</strong> <span id="modalIdade"></span></p>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="../assets/scripts/catalogo.js"></script> <!-- importa o JS do catalogo -->
 
