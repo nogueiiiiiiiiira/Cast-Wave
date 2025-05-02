@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// verifica se o usuário está logado
+// Verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: /projetoLocadora/paginas/login.php');
+    echo "Você precisa estar logado para realizar o aluguel.";
     exit();
 }
 
-// conexão com o banco de dados
+// Conexão com o banco de dados
 $host = "localhost"; 
 $usuario = "root";  
 $senha = ""; 
@@ -15,57 +15,50 @@ $banco = "castwave";
 
 $conn = new mysqli($host, $usuario, $senha, $banco);
 
-// verificação de conexão
+// Verificação de conexão
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo "Falha na conexão: " . $conn->connect_error;
+    exit();
 }
 
-// obtém os dados do usuário e do filme
+// Obtém os dados do usuário e do filme
 $usuario_id = $_SESSION['usuario_id'];
-$filme_id = $_GET['filme_id'];
-$preco = $_GET['preco'];
-$nome_filme = $_GET['nome_filme'];
+$filme_id = isset($_POST['filme_id']) ? (int)$_POST['filme_id'] : 0;
+$preco = isset($_POST['preco']) ? (float)$_POST['preco'] : 0;
+$nome_filme = isset($_POST['nome_filme']) ? $_POST['nome_filme'] : '';
+
+// Valida os dados
+if ($filme_id <= 0 || $preco <= 0 || empty($nome_filme)) {
+    echo "Erro: Dados inválidos.";
+    exit();
+}
 
 $data_inicio = date("Y-m-d H:i:s");
 $data_fim_nova = date("Y-m-d H:i:s", strtotime("+15 days"));
 
-// verifica se o usuário já alugou este filme e ainda está válido
+// Verifica se o usuário já alugou este filme e ainda está válido
 $sqlVerifica = "SELECT * FROM alugueis WHERE filme_id = ? AND usuario_id = ? AND data_fim > NOW()";
 $stmtVerifica = $conn->prepare($sqlVerifica);
-
-// verifica se a preparação da query falhou
-if (!$stmtVerifica) {
-    die("Erro na preparação da consulta de verificação: " . $conn->error);
-}
 
 $stmtVerifica->bind_param("ii", $filme_id, $usuario_id);
 $stmtVerifica->execute();
 $result = $stmtVerifica->get_result();
 
 if ($result->num_rows > 0) {
-    // se já tem aluguel ativo
-    echo "<script>alert('Você já alugou este filme e o aluguel ainda está ativo. Aluguel cancelado.'); window.location.href = '/projetoLocadora/paginas/catalogo.php';</script>";
+    echo "Você já alugou este filme e o período ainda está ativo.";
+    exit();
 } else {
-    // se não, novo aluguel
+    // Novo aluguel
     $sqlAluguel = "INSERT INTO alugueis (usuario_id, filme_id, preco, nome_filme, data_inicio, data_fim) VALUES (?, ?, ?, ?, ? , ?)";
     $stmtAluguel = $conn->prepare($sqlAluguel);
 
-    // verifica se a preparação do comando de aluguel falhou
-    if (!$stmtAluguel) {
-        die("Erro na preparação da consulta SQL de inserção: " . $conn->error);
-    }
-
-    // vincula os parâmetros
     $stmtAluguel->bind_param("iidsss", $usuario_id, $filme_id, $preco, $nome_filme, $data_inicio, $data_fim_nova);
 
-    // executa a consulta
+    // Executa a consulta
     if ($stmtAluguel->execute()) {
-        echo "<script>alert('Filme alugado com sucesso!'); window.location.href = '/projetoLocadora/paginas/catalogo.php';</script>";
+        echo "Aluguel realizado com sucesso!";
     } else {
-        echo "<script>alert('Erro ao tentar alugar o filme: " . $stmtAluguel->error . "'); window.location.href = '/projetoLocadora/paginas/catalogo.php';</script>";
+        echo "Erro ao alugar: " . $stmtAluguel->error;
     }
 }
-
 ?>
-
-

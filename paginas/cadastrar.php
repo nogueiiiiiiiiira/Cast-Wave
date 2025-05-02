@@ -10,9 +10,10 @@ $conn = new mysqli($host, $usuario, $senha, $banco);
 
 // verifica se houve erro na conexão
 if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
+    echo "Erro na conexão: " . $conn->connect_error;
 }
-// verifica se o formulário foi enviado
+
+// recebe dados do formulário
 $nome = $_POST['nome'];
 $cpf = $_POST['cpf'];
 $email = $_POST['email'];
@@ -43,6 +44,7 @@ if ($result->num_rows > 0) { // verifica se já existe um usuário com os mesmos
             $mensagem .= " Telefone";
         }
     }
+
     echo trim($mensagem); // exibe a mensagem de erro
     exit;
 }

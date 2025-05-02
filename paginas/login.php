@@ -13,7 +13,7 @@ $conn = new mysqli($host, $usuario, $senha, $banco);
 
 // verifica se houve erro na conexão
 if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
+    echo "Erro de conexão: " . $conn->connect_error;
 }
 
 // verifica se o formulário foi enviado
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // verifica se o método é POST
     $resultado = $stmt->get_result();
 
     if (!$resultado) {
-        die("Erro na consulta: " . $conn->error);
+        echo "Erro na consulta: " . $conn->error;
     }
 
     // verifica se o usuário existe

@@ -4,7 +4,7 @@ session_start();
 
 // verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-  header('Location: ./login.php'); 
+  header('Location: /projetoLocadora/paginas/login.php'); 
   exit();
 }
 
@@ -19,7 +19,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // verificação de conexão
 if ($conn->connect_error) {
-  die("Falha na conexão: " . $conn->connect_error);
+  echo "Falha na conexão: " . $conn->connect_error;
 }
 
 // obtém o ID do usuário da sessão
@@ -109,16 +109,16 @@ if (!$usuario_telefone) {
         <br>
 
         <div class="text-center mt-3">
-        <a href="editarConta.php" class="btn btn-custom">
+        <a href="editar_conta.php" class="btn btn-custom">
           Editar minha conta
         </a>
       </div>
       </form>
 
       <div class="text-center mt-3">
-        <button class="btn btn-custom" onclick="confirmarExclusao()">
+        <a href="excluir_conta.php" class="btn btn-custom" onclick="confirmarExclusao()">
           Excluir minha conta
-        </button>
+        </a>
       </div>
     </div>
   </div>

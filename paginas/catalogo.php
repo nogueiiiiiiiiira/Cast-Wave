@@ -20,7 +20,7 @@ $conn = new mysqli($host, $usuario, $senha, $banco);
 
 // verificação de conexão
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo "Falha na conexão: " . $conn->connect_error;
 }
 
 // obtém o ID do usuário da sessão
@@ -57,7 +57,7 @@ if ($pesquisa) {
 // faz a requisição para a API
 $response = @file_get_contents($url);
 if ($response === FALSE) {
-    die("Erro ao tentar recuperar dados da API.");
+    echo "Erro ao tentar recuperar dados da API.";
 }
 
 // decodifica a resposta JSON
@@ -129,15 +129,16 @@ function paginaLink($i, $paginaAtual, $pesquisa) {
             <img src="<?php echo $posterUrl; ?>" alt="Poster"> 
             <br>
             <h5><?php echo htmlspecialchars($filme['title']); ?></h5>
-            <p><strong>Nota: </strong><?php echo $filme['vote_average']; ?></p>
+            <p><strong>Nota do Público: </strong><?php echo $filme['vote_average']; ?></p>
             <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p>
-            <form action="aluguel.php" method="get" onsubmit="return confirmarAluguel('<?php echo htmlspecialchars($filme['title']); ?>', '<?php echo number_format($preco, 2, ',', '.'); ?>')">
-                <input type="hidden" name="preco" value="<?php echo $preco; ?>">
+            <form class="alugarForm" action="../paginas/aluguel.php" method="POST">
+            <input type="hidden" name="preco" value="<?php echo $preco; ?>">
                 <input type="hidden" name="nome_filme" value="<?php echo htmlspecialchars($filme['title']); ?>">
                 <input type="hidden" name="filme_id" value="<?php echo $filme_id; ?>">
                 <button type="submit" class="btn btn-custom me-4" id="alugarBtn">Alugar</button>
                 <a href="detalhes.php?filme=<?php echo urlencode($filme['title']); ?>" class="btn btn-custom me-4">Detalhes</a>
             </form>
+
         </div>
     <?php endforeach; } ?>
 

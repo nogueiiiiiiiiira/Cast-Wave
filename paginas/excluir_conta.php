@@ -3,10 +3,19 @@
 // inicializa a sessão
 session_start();
 
-// verifica se o usuário está logado
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: /projetoLocadora/paginas/login.php');
-    exit();
+// obtém o ID do usuário antes de limpar a sessão
+$usuario_id = $_SESSION['usuario_id'] ?? null;
+
+// limpa a sessão
+$_SESSION = array();
+
+// se você estiver usando cookies, limpe o cookie
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
 }
 
 // conexão com o banco de dados
@@ -17,25 +26,24 @@ $dbname = "castwave";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo "Falha na conexão: " . $conn->connect_error;
 }
 
-$usuario_id = $_SESSION['usuario_id'];
+if ($usuario_id !== null) {
+    // exclui o usuário com base no ID da sessão
+    $sql = "DELETE FROM usuarios WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $stmt->close();
+}
 
-// exclui o usuário com base no ID da sessão
-$sql = "DELETE FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $usuario_id);
-$stmt->execute();
-
-// finaliza a sessão
-session_unset();
-session_destroy();
-
-$stmt->close();
 $conn->close();
 
+// finaliza a sessão
+session_destroy();
+
 // redireciona para página de login ou uma página de despedida
-header("Location: /projetoLocadora/paginas/login.php");
+header("Location: /projetoLocadora/html/login.html");
 exit();
 ?>

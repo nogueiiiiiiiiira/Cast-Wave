@@ -1,5 +1,3 @@
-// editarConta.php
-
 <?php
 session_start();
 
@@ -20,7 +18,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // verificação de conexão
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo "Falha na conexão: " . $conn->connect_error;
 }
 
 // obtém o ID do usuário da sessão
@@ -67,20 +65,20 @@ $conn->close();
 
     <br>
     <div class="card-body">
-    <form action="salvarEdicao.php" method="POST" onsubmit="return validarFormulario()">
+    <form id="formConta" action="../paginas/salvar_edicao.php" method="POST">
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
-          <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu novo nome" value="<?= htmlspecialchars($usuario_nome) ?>">
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu novo nome">
           </div>
 
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu novo e-mail" value="<?= htmlspecialchars($usuario_email) ?>">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu novo e-mail">
           </div>
 
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-phone"></i></span>
-          <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Digite seu novo telefone" value="<?= htmlspecialchars($usuario_telefone) ?>">
+          <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Digite seu novo telefone">
           </div>
 
         <div class="mb-3 input-group">

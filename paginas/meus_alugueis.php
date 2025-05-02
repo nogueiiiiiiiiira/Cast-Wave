@@ -3,8 +3,8 @@ session_start();
 
 // verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: ./login.php');
-    exit();
+  header('Location: /projetoLocadora/paginas/login.php'); 
+  exit();
 }
 
 // conexão com o banco de dados
@@ -17,7 +17,7 @@ $conn = new mysqli($host, $usuario, $senha, $banco);
 
 // verificação de conexão
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo "Falha na conexão: " . $conn->connect_error;
 }
 
 // obtém o ID do usuário da sessão
@@ -27,7 +27,7 @@ $usuario_id = $_SESSION['usuario_id'];
 $sqlAlugueis = "SELECT filme_id, nome_filme, data_fim, data_inicio FROM alugueis WHERE usuario_id = ?";
 $stmtAlugueis = $conn->prepare($sqlAlugueis);
 if ($stmtAlugueis === false) {
-    die("Erro ao preparar a consulta SQL: " . $conn->error);
+    echo "Erro ao preparar a consulta SQL: " . $conn->error;
 }
 $stmtAlugueis->bind_param("i", $usuario_id);
 $stmtAlugueis->execute();
