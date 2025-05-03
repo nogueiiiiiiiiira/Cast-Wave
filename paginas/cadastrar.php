@@ -1,12 +1,12 @@
 <?php
 
+// conexão com o database de dados
 $host = "localhost";
-$usuario = "root";
+$usuario = "root";  
 $senha = "";
-$banco = "castwave";
+$database = "castwave";
 
-// conexao com o banco de dados
-$conn = new mysqli($host, $usuario, $senha, $banco);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verifica se houve erro na conexão
 if ($conn->connect_error) {
@@ -18,15 +18,15 @@ $nome = $_POST['nome'];
 $cpf = $_POST['cpf'];
 $email = $_POST['email'];
 $telefone = $_POST['telefone'];
-$dataNasc = $_POST['dataNasc'];
+$data_nasc = $_POST['data_nasc'];
 $senha = $_POST['senha'];
 
 // validação dos campos
-$dataNasc = DateTime::createFromFormat('Y-m-d', $dataNasc) ? $dataNasc : '0000-00-00';
+$data_nasc = DateTime::createFromFormat('Y-m-d', $data_nasc) ? $data_nasc : '0000-00-00'; // formata a data de nascimento para o padrão y-m-d
 
 // verifica se os campos obrigatórios estão preenchidos
-$sqlVerifica = "SELECT * FROM usuarios WHERE cpf = ? OR email = ? OR telefone = ?";
-$stmt = $conn->prepare($sqlVerifica); // prepara a consulta SQL
+$sql_verifica = "SELECT * FROM usuarios WHERE cpf = ? OR email = ? OR telefone = ?";
+$stmt = $conn->prepare($sql_verifica); // prepara a consulta SQL
 $stmt->bind_param("sss", $cpf, $email, $telefone); // vincula os parâmetros; sss serve para indicar que os parâmetros são strings
 $stmt->execute(); // executa a consulta
 $result = $stmt->get_result(); // obtém o resultado da consulta
@@ -49,11 +49,11 @@ if ($result->num_rows > 0) { // verifica se já existe um usuário com os mesmos
     exit;
 }
 
-$senhaHash = password_hash($senha, PASSWORD_DEFAULT); // criptografa a senha
+$senha_hash = password_hash($senha, PASSWORD_DEFAULT); // criptografa a senha
 
-$sql = "INSERT INTO usuarios (nome, cpf, email, telefone, dataNasc, senha) VALUES (?, ?, ?, ?, ?, ?)"; // prepara a consulta SQL para inserir os dados
+$sql = "INSERT INTO usuarios (nome, cpf, email, telefone, data_nasc, senha) VALUES (?, ?, ?, ?, ?, ?)"; // prepara a consulta SQL para inserir os dados
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ssssss", $nome, $cpf, $email, $telefone, $dataNasc, $senhaHash);
+$stmt->bind_param("ssssss", $nome, $cpf, $email, $telefone, $data_nasc, $senha_hash);
 
 if ($stmt->execute()) { // executa a consulta
     echo "Cadastro realizado com sucesso!";

@@ -1,39 +1,40 @@
-function confirmarAluguel(nomeFilme, preco) {
-    const confirmar = confirm(`Você tem certeza que deseja alugar o filme "${nomeFilme}" por R$ ${preco}?\n\nVocê terá 15 dias para assistir ao filme.`);
+function confirmar_aluguel(nome_filme, preco) {
+    const confirmar = confirm(`Você tem certeza que deseja alugar o filme "${nome_filme}" por R$ ${preco}?\n\nVocê terá 15 dias para assistir ao filme.`);
 
     return confirmar;
 }
 
-document.querySelectorAll('.alugarForm').forEach(form => {
-    form.addEventListener('submit', e => {
-        e.preventDefault();
+document.querySelectorAll('alugar_form').forEach(form => { // seleciona todos os formulários de aluguel
+    form.addEventListener('submit', e => { // adiciona um evento de submit a cada formulário
+        e.preventDefault(); // previne o comportamento padrão do formulário
 
-        const nomeFilme = e.target.elements['nome_filme'].value;
-        const preco = e.target.elements['preco'].value;
+        const nome_filme = e.target.elements['nome_filme'].value; // obtém o nome do filme
+        const preco = e.target.elements['preco'].value; // obtém o preço do aluguel
 
-        if (!confirmarAluguel(nomeFilme, preco)) {
+        if (!confirmar_aluguel(nome_filme, preco)) { // chama a função de confirmação
+            alert("Aluguel cancelado."); // exibe mensagem de cancelamento
             return; // usuário cancelou
         }
 
-        const formData = new FormData(e.target);
+        const form_data = new form_data(e.target); // cria um objeto form_data com os dados do formulário
 
-        fetch('../paginas/aluguel.php', {
-            method: 'POST',
-            body: formData
+        fetch('../paginas/aluguel.php', { // envia os dados para o servidor
+            method: 'POST', 
+            body: form_data
         })
-            .then(response => response.text())
-            .then(message => {
-                alert(message);
-            })
-            .catch(error => {
+            .then(response => response.text()) // espera a resposta do servidor
+            .then(message => { // exibe a resposta em um alerta
+                alert(message); 
+            }) 
+            .catch(error => { // trata erros
                 alert("Erro ao processar o aluguel. Tente novamente mais tarde.");
             });
     });
 });
 
-function mostrarDetalhes(idFilme, titulo, generos, resumo) {
-    var apiKey = "7d76651465970372fcd6d406b5b325ee";  
-    var url = `https://api.themoviedb.org/3/movie/${idFilme}?api_key=${apiKey}&language=pt-BR&append_to_response=videos`;
+function mostrar_detalhes(idFilme, titulo, generos, resumo) {
+    var api_key = "7d76651465970372fcd6d406b5b325ee";  
+    var url = `https://api.themoviedb.org/3/movie/${idFilme}?api_key=${api_key}&language=pt-BR&append_to_response=videos`;
 
     fetch(url)
         .then(response => response.json())

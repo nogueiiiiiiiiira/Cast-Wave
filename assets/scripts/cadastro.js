@@ -1,6 +1,6 @@
-const cpf = document.getElementById("cpf");
-const telefone = document.getElementById("telefone");
-const dataNasc = document.getElementById("dataNasc");
+const cpf = document.getElementById("cpf"); // obtém CPF
+const telefone = document.getElementById("telefone"); // obtém telefone
+const data_nasc = document.getElementById("data_nasc"); // obtém data de nascimento
 
 // mascaras para cpf e telefone
 cpf.addEventListener("input", () => {
@@ -18,32 +18,32 @@ telefone.addEventListener("input", () => {
     telefone.value = value; // atualiza o valor do campo
 });
 
-document.getElementById('cadastroForm').addEventListener('submit', e => {
-    e.preventDefault();
+document.getElementById('cadastroForm').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
+    e.preventDefault(); // previne o comportamento padrão do formulário
 
-    const senha = document.getElementById('senha').value;
-    const senha2 = document.getElementById('senha2').value;
+    const senha = document.getElementById('senha').value; // obtém senha
+    const senha2 = document.getElementById('senha2').value; // obtém a confirmação da senha
 
-    const senhaValida = validarSenha(senha);
+    const senha_valida = validar_senha(senha); // valida a senha
 
-    if (!senhaValida) {
+    if (!senha_valida) { // verifica se a senha é válida
         alert("A senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
         return;
     }
 
-    if (senha !== senha2) {
+    if (senha !== senha2) { // verifica se as senhas coincidem
         alert("As senhas não coincidem.");
         return;
     }
 
-    const dataFormatada = formatarData(dataNasc.value); // formata a data para o formato desejado
+    const data_formatada = formatar_data(data_nasc.value); // formata a data para o formato desejado
 
-    const formData = new FormData(e.target); // cria um objeto FormData com os dados do formulário
-    formData.set('dataNasc', dataFormatada); // adiciona a data formatada ao FormData
+    const form_data = new form_data(e.target); // cria um objeto form_data com os dados do formulário
+    form_data.set('data_nasc', data_formatada); // adiciona a data formatada ao form_data
 
     fetch('../paginas/cadastrar.php', { // envia os dados para o servidor
         method: 'POST',
-        body: formData // envia os dados do formulário
+        body: form_data // envia os dados do formulário
     })
 
     .then(r => r.text()) // espera a resposta do servidor
@@ -54,15 +54,15 @@ document.getElementById('cadastroForm').addEventListener('submit', e => {
     });
 });
 
-function validarSenha(senha) {
-    const temTamanhoMinimo = senha.length >= 8; // verifica se a senha tem pelo menos 8 caracteres
-    const temLetra = /[a-zA-Z]/.test(senha); // verifica se a senha contém letras
-    const temNumero = /[0-9]/.test(senha); // verifica se a senha contém números
-    const temSimbolo = /[!@#$%^&*(),.?":{}|<>]/.test(senha); // verifica se a senha contém símbolos
-    return temTamanhoMinimo && temLetra && temNumero && temSimbolo; // retorna true se todas as condições forem atendidas
+function validar_senha(senha) {
+    const tamanho_minimo = senha.length >= 8; // verifica se a senha tem pelo menos 8 caracteres
+    const letras = /[a-zA-Z]/.test(senha); // verifica se a senha contém letras
+    const numeros = /[0-9]/.test(senha); // verifica se a senha contém números
+    const simbolos = /[!@#$%^&*(),.?":{}|<>]/.test(senha); // verifica se a senha contém símbolos
+    return tamanho_minimo && letras && numeros && simbolos; // retorna true se todas as condições forem atendidas
 }
 
-function formatarData(data) {
+function formatar_data(data) {
     const partes = data.split('-'); // divide a data em partes (ano, mês, dia)
 
     return `${partes[0]}-${partes[1]}-${partes[2]}`; // formata a data no formato desejado (ano-mês-dia)

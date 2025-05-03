@@ -4,12 +4,11 @@
 session_start();
 
 $host = "localhost";
-$usuario = "root";
+$usuario = "root";  
 $senha = "";      
-$banco = "castwave"; 
+$database = "castwave"; 
 
-// conexão com o banco de dados
-$conn = new mysqli($host, $usuario, $senha, $banco);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verifica se houve erro na conexão
 if ($conn->connect_error) {

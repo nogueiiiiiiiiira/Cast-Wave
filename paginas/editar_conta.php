@@ -1,4 +1,6 @@
 <?php
+
+// inicia a sessão
 session_start();
 
 // verifica se o usuário está logado
@@ -7,14 +9,13 @@ if (!isset($_SESSION['usuario_id'])) {
     exit();
 }
 
-// conexão com o banco de dados 
-$servername = "localhost"; 
-$username = "root";  
+// conexão com o database de dados 
+$host = "localhost"; 
+$usuario = "root";  
 $password = ""; 
-$dbname = "castwave";  
+$database = "castwave";  
 
-// criação da conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $usuario, $password, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {
@@ -65,7 +66,7 @@ $conn->close();
 
     <br>
     <div class="card-body">
-    <form id="formConta" action="../paginas/salvar_edicao.php" method="POST">
+    <form id="form_conta" action="../paginas/salvar_edicao.php" method="POST">
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
           <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu novo nome">

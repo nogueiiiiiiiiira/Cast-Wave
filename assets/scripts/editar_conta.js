@@ -1,44 +1,44 @@
-const telefone = document.getElementById("telefone");
+const telefone = document.getElementById("telefone"); // obtém telefone
 
-telefone.addEventListener("input", () => {
-    let value = telefone.value.replace(/\D/g, "").slice(0, 11); // remover caracteres não numéricos e limitar a 11 dígitos
-    value = value.replace(/^(\d{2})(\d)/, "($1) $2"); // adicionar parênteses e espaço
-    value = value.replace(/(\d{5})(\d)/, "$1-$2"); // adicionar hífen
+telefone.addEventListener("input", () => { // adiciona um evento de input ao campo telefone
+    let value = telefone.value.replace(/\D/g, "").slice(0, 11); // remove caracteres não numéricos e limitar a 11 dígitos
+    value = value.replace(/^(\d{2})(\d)/, "($1) $2"); // adiciona parênteses e espaço
+    value = value.replace(/(\d{5})(\d)/, "$1-$2"); // adiciona hífen
     telefone.value = value; // atualiza o valor do input
 });
 
 
-function validarFormulario() {
-    const form = document.getElementById("formConta");
+function validar_formulario() {
+    const form = document.getElementById("form_conta"); // obtém o formulário
     const inputs = form.querySelectorAll("input");  // pega todos os campos de input do formulário
 
     // verifica se algum campo está vazio
-    for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].value.trim() === "") {
+    for (let i = 0; i < inputs.length; i++) { // percorre todos os campos
+        if (inputs[i].value.trim() === "") { // verifica se o campo está vazio
             alert("Por favor, preencha todos os campos.");
             return false;  // impede o envio do formulário
         }
     }
 
-    const senhaNovo = document.getElementById("senha").value;
-    const senha2Novo = document.getElementById("senha2").value;
+    const senha_nova = document.getElementById("senha_nova").value; // obtém a nova senha
+    const senha_confirmacao = document.getElementById("senha_confirmacao").value; // obtém a confirmação da nova senha
 
     // mensagem de confirmação com os dados alterados
     let mensagem = `Tem certeza que deseja alterar os seus dados?`;
 
-    // confirmar a alteração com o usuário
+    // confirma a alteração com o usuário
     const confirmacao = confirm(mensagem);
     if (!confirmacao) {
         return false;  // impede o envio do formulário
     }
 
     // validação da senha
-    if (senhaNovo !== "") {
-        if (!validarSenha(senhaNovo)) {
+    if (senha_nova !== "") {
+        if (!validar_senha(senha_nova)) {
             alert("A senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
             return false;
         }
-        if (senhaNovo !== senha2Novo) {
+        if (senha_nova !== senha_confirmacao) {
             alert("As senhas não coincidem.");
             return false;
         }
@@ -48,34 +48,34 @@ function validarFormulario() {
 }
 
 // valida a senha de acordo com os critérios
-function validarSenha(senha) {
-    const temTamanhoMinimo = senha.length >= 8;
-    const temLetra = /[a-zA-Z]/.test(senha);
-    const temNumero = /[0-9]/.test(senha);
-    const temSimbolo = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
-    return temTamanhoMinimo && temLetra && temNumero && temSimbolo;
+function validar_senha(senha) {
+    const tamanho_minimo = senha.length >= 8;
+    const letras = /[a-zA-Z]/.test(senha);
+    const numeros = /[0-9]/.test(senha);
+    const simbolos = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
+    return tamanho_minimo && letras && numeros && simbolos;
 }
 
-document.getElementById('formConta').addEventListener('submit', e => {
+document.getElementById('form_conta').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
     e.preventDefault();  // impede o envio normal do formulário
 
     // valida o formulário antes de prosseguir
-    if (!validarFormulario()) {
+    if (!validar_formulario()) {
         return;  // se a validação falhar, não envia os dados
     }
 
-    const formData = new FormData(e.target);  // cria um objeto FormData com os dados do formulário
+    const form_data = new form_data(e.target);  // cria um objeto form_data com os dados do formulário
 
     fetch('../paginas/salvar_edicao.php', {  // envia os dados para o servidor
         method: 'POST',
-        body: formData  // envia os dados do formulário
+        body: form_data  // envia os dados do formulário
     })
     .then(response => response.text())  // espera a resposta do servidor
     .then(message => {
         alert(message);  // exibe a resposta do servidor como um alerta
         e.target.reset();  // limpa os campos do formulário
     })
-    .catch(error => {
+    .catch(error => { // trata erros
         alert("Erro ao processar a edição. Tente novamente mais tarde.");
     });
 });

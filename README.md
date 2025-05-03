@@ -31,12 +31,6 @@
 
 ---
 
-## Inicie:
-
-- Digite: `http://localhost/projetoLocadora/index.html`
-
----
-
 ## ⚙️ Requisitos para Executar o Projeto
 
 1. **Servidor Local**
@@ -44,9 +38,9 @@
    - Inicie os módulos **Apache** e **MySQL**
 
 2. **Banco de Dados**
-   - Acesse o `phpMyAdmin`
+   - Acesse o `phpMyAdmin` pelo XAMPP
    - Crie um banco de dados chamado `castwave`
-   - Execute o script SQL abaixo para criar as tabelas:
+   - Execute o script SQL abaixo para criar as tabelas necessárias:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS castwave;
@@ -57,7 +51,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nome VARCHAR(100) NOT NULL,
     cpf VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    dataNasc DATE NOT NULL,
+    data_nasc DATE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(20) UNIQUE NOT NULL
 );
@@ -68,18 +62,33 @@ CREATE TABLE IF NOT EXISTS alugueis (
     filme_id INT NOT NULL,
     preco DECIMAL(5,2) NOT NULL,
     nome_filme VARCHAR(255) NOT NULL,
-    data_inicio DATE NOT NULL,
-    data_devolucao DATE,
+    genero_filme VARCHAR(255) NOT NULL,
+    classificacao VARCHAR(10) NOT NULL,
+    data_inicio DATETIME NOT NULL,
+    data_fim DATETIME,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE contatos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  assunto VARCHAR(100) NOT NULL,
-  mensagem TEXT NOT NULL,
-  telefone VARCHAR(20) NOT NULL,
-  data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS contatos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    assunto VARCHAR(100) NOT NULL,
+    mensagem TEXT NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
+---
 
+## 🚀 Como Executar
+
+- Certifique-se de que os módulos Apache e MySQL do XAMPP estejam rodando.
+- Acesse o sistema pelo navegador em: `http://localhost/projetoLocadora/index.html`
+- Faça login ou cadastre-se para começar a usar o sistema.
+
+---
+
+## ℹ️ Sobre a API TMDb
+
+O sistema utiliza a API pública **The Movie Database (TMDb)** para obter informações atualizadas sobre filmes, gêneros, classificações e trailers. A chave da API está configurada no código-fonte, mas você pode substituir pela sua própria chave para evitar limitações.

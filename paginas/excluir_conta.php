@@ -1,6 +1,6 @@
 <?php
 
-// inicializa a sessão
+// inicia a sessão
 session_start();
 
 // obtém o ID do usuário antes de limpar a sessão
@@ -18,13 +18,13 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// conexão com o banco de dados
-$servername = "localhost";
-$username = "root";
+// conexão com o database de dados
+$host = "localhost";
+$usuario = "root";  
 $password = "";
-$dbname = "castwave";
+$database = "castwave";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $usuario, $password, $database);
 if ($conn->connect_error) {
     echo "Falha na conexão: " . $conn->connect_error;
 }

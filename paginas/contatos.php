@@ -1,11 +1,12 @@
 <?php
-$host = "localhost";
-$usuario = "root";
-$senha = ""; 
-$banco = "castwave"; 
 
-// conexao com o banco de dados
-$conn = new mysqli($host, $usuario, $senha, $banco);
+// conexão com o database de dados
+$host = "localhost";
+$usuario = "root";  
+$senha = ""; 
+$database = "castwave"; 
+
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verifica a conexão
 if ($conn->connect_error) {

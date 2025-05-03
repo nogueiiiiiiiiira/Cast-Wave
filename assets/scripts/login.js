@@ -1,19 +1,19 @@
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+document.getElementById("login_form").addEventListener("submit", async function (e) { // adiciona um evento de submit ao formulário de login
+    e.preventDefault(); // previne o comportamento padrão do formulário
 
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+    const email = document.getElementById("email").value; // obtém o email
+    const senha = document.getElementById("senha").value; // obtém a senha
 
-    const formData = new FormData();
-    formData.append("email", email); // adiciona o email ao FormData
-    formData.append("senha", senha); // adiciona a senha ao FormData
+    const form_data = new form_data();
+    form_data.append("email", email); // adiciona o email ao form_data
+    form_data.append("senha", senha); // adiciona a senha ao form_data
 
     const response = await fetch("/projetoLocadora/paginas/login.php", { // esperando o retorno do PHP
         method: "POST",
-        body: formData
+        body: form_data
     });
 
-    const result = await response.text();
+    const result = await response.text(); // espera a resposta do servidor
 
     if (result === "success") { // se o login for bem-sucedido...
         window.location.href = "/projetoLocadora/paginas/catalogo.php";

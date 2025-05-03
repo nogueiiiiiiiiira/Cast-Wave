@@ -7,13 +7,13 @@ if (!isset($_SESSION['usuario_id'])) {
   exit();
 }
 
-// conexão com o banco de dados
+// conexão com o database de dados
 $host = "localhost"; 
 $usuario = "root";  
 $senha = ""; 
-$banco = "castwave";  
+$database = "castwave";  
 
-$conn = new mysqli($host, $usuario, $senha, $banco);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {
@@ -24,41 +24,41 @@ if ($conn->connect_error) {
 $usuario_id = $_SESSION['usuario_id'];
 
 // consulta SQL para obter os filmes alugados pelo usuário com base no ID do filme
-$sqlAlugueis = "SELECT filme_id, nome_filme, data_fim, data_inicio FROM alugueis WHERE usuario_id = ?";
-$stmtAlugueis = $conn->prepare($sqlAlugueis);
-if ($stmtAlugueis === false) {
+$sql_alugueis = "SELECT filme_id, nome_filme, data_fim, data_inicio FROM alugueis WHERE usuario_id = ?";
+$stmt_alugueis = $conn->prepare($sql_alugueis);
+if ($stmt_alugueis === false) {
     echo "Erro ao preparar a consulta SQL: " . $conn->error;
 }
-$stmtAlugueis->bind_param("i", $usuario_id);
-$stmtAlugueis->execute();
-$stmtAlugueis->bind_result($filmeId, $nomeFilme, $data_fim, $data_inicio);
+$stmt_alugueis->bind_param("i", $usuario_id);
+$stmt_alugueis->execute();
+$stmt_alugueis->bind_result($filme_id, $nome_filme, $data_fim, $data_inicio);
 $alugueis = [];
-while ($stmtAlugueis->fetch()) {
-    $alugueis[] = ['filme_id' => $filmeId, 'nome_filme' => $nomeFilme, 'data_fim' => $data_fim, 'data_inicio' => $data_inicio];
+while ($stmt_alugueis->fetch()) {
+    $alugueis[] = ['filme_id' => $filme_id, 'nome_filme' => $nome_filme, 'data_fim' => $data_fim, 'data_inicio' => $data_inicio];
 }
-$stmtAlugueis->close();
+$stmt_alugueis->close();
 
 // URL da API do The Movie Database (TMDb) e chave de API
-$apiKey = "7d76651465970372fcd6d406b5b325ee";
-$apiUrl = 'https://api.themoviedb.org/3/movie/';
+$api_key = "7d76651465970372fcd6d406b5b325ee";
+$api_url = 'https://api.themoviedb.org/3/movie/';
 
 // buscar os detalhes do filme, incluindo a imagem
-function getFilmeDetails($filmeId, $apiKey) {
-    $url = $GLOBALS['apiUrl'] . $filmeId . '?api_key=' . $apiKey . '&language=pt-BR';
+function filme_detalhes($filme_id, $api_key) {
+    $url = $GLOBALS['api_url'] . $filme_id . '?api_key=' . $api_key . '&language=pt-BR';
     $json = file_get_contents($url);
     $data = json_decode($json, true);
     return $data;
 }
 
 // obter o preço de aluguel com base no filme, usuário e data
-function getPrecoAluguel($filmeId, $usuarioId, $data_inicio, $conn) {
-    $sqlPreco = "SELECT preco FROM alugueis WHERE filme_id = ? AND usuario_id = ? AND data_inicio = ?";
-    $stmtPreco = $conn->prepare($sqlPreco);
-    $stmtPreco->bind_param("iis", $filmeId, $usuarioId, $data_inicio);
-    $stmtPreco->execute();
-    $stmtPreco->bind_result($preco);
-    $stmtPreco->fetch();
-    $stmtPreco->close();
+function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
+    $sql_preco = "SELECT preco FROM alugueis WHERE filme_id = ? AND usuario_id = ? AND data_inicio = ?";
+    $stmt_preco = $conn->prepare($sql_preco);
+    $stmt_preco->bind_param("iis", $filme_id, $usuario_id, $data_inicio);
+    $stmt_preco->execute();
+    $stmt_preco->bind_result($preco);
+    $stmt_preco->fetch();
+    $stmt_preco->close();
     return $preco;
 }
 ?>
@@ -98,28 +98,28 @@ function getPrecoAluguel($filmeId, $usuarioId, $data_inicio, $conn) {
   <br>
     <h4>Meus Aluguéis</h4>
     <br>
-    <?php if (empty($alugueis)): ?>
+    <?php if (empty($alugueis)): ?> <!-- verifica se o usuário não tem filmes alugados -->
         <p>Você não tem filmes alugados.</p>
-    <?php else: ?>
+    <?php else: ?> <!-- se o usuário tem filmes alugados, exibe os detalhes -->
       <div class="card-container">
         <div class="row">
             <?php foreach ($alugueis as $aluguel): 
                 // busca os detalhes do filme na API
-                $filmeDetails = getFilmeDetails($aluguel['filme_id'], $apiKey);
+                $detalhes_filme = filme_detalhes($aluguel['filme_id'], $api_key);
                 // URL da imagem do filme
-                $imageUrl = 'https://image.tmdb.org/t/p/w500' . $filmeDetails['poster_path'];
+                $image_url = 'https://image.tmdb.org/t/p/w500' . $detalhes_filme['poster_path'];
                 // busca o preço do aluguel
-                $preco = getPrecoAluguel($aluguel['filme_id'], $usuario_id, $aluguel['data_inicio'], $conn);
+                $preco = preco_aluguel($aluguel['filme_id'], $usuario_id, $aluguel['data_inicio'], $conn);
             ?>
                 <div class="col-md-2 mb-4">
                     <div class="card">
-                        <img src="<?php echo $imageUrl; ?>" class="card-img-top" alt="Imagem do filme">
+                        <img src="<?php echo $image_url; ?>" class="card-img-top" alt="Imagem do filme">
                         <div class="card-body">
                             <h5><?php echo htmlspecialchars($aluguel['nome_filme']); ?></h5>
                             <br>
-                            <p><strong>Data de Aluguel:</strong> <?php echo date('d/m/Y', strtotime($aluguel['data_inicio'])); ?></p>
-                            <p><strong>Data de Vencimento:</strong> <?php echo date('d/m/Y', strtotime($aluguel['data_fim'])); ?></p>
-                            <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p>
+                            <p><strong>Data de Aluguel:</strong> <?php echo date('d/m/Y', strtotime($aluguel['data_inicio'])); ?></p> <!-- formata a data de início do aluguel -->
+                            <p><strong>Data de Vencimento:</strong> <?php echo date('d/m/Y', strtotime($aluguel['data_fim'])); ?></p> <!-- formata a data de fim do aluguel -->
+                            <p><strong>Preço:</strong> R$ <?php echo number_format($preco, 2, ',', '.'); ?></p> <!-- formata o preço do aluguel -->
                         </div>
                     </div>
                 </div>

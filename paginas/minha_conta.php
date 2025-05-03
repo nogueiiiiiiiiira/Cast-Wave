@@ -1,5 +1,6 @@
 <?php
 
+// inicia a sessão
 session_start();
 
 // verifica se o usuário está logado
@@ -8,14 +9,13 @@ if (!isset($_SESSION['usuario_id'])) {
   exit();
 }
 
-// conexão com o banco de dados 
-$servername = "localhost"; 
-$username = "root";  
+// conexão com o database de dados 
+$host = "localhost"; 
+$usuario = "root";  
 $password = ""; 
-$dbname = "castwave";  
+$database = "castwave";  
 
-// criação da conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $usuario, $password, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {
@@ -27,12 +27,12 @@ $usuario_id = $_SESSION['usuario_id'];
 
 // consulta SQL para obter o nome, email, telefone e senha do usuário
 $sql = "SELECT nome, email, telefone FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $usuario_id);
-$stmt->execute();
-$stmt->bind_result($usuario_nome, $usuario_email, $usuario_telefone);
-$stmt->fetch();
-$stmt->close();
+$stmt = $conn->prepare($sql); // prepara a consulta
+$stmt->bind_param("i", $usuario_id); // vincula o parâmetro
+$stmt->execute(); // executa a consulta
+$stmt->bind_result($usuario_nome, $usuario_email, $usuario_telefone); // vincula os resultados às variáveis
+$stmt->fetch(); // busca os dados do usuário. fetch retorna os dados da linha atual e avança o ponteiro para a próxima linha
+$stmt->close(); 
 $conn->close();
 
 // caso algum dado não seja encontrado
@@ -47,7 +47,6 @@ if (!$usuario_telefone) {
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -116,7 +115,7 @@ if (!$usuario_telefone) {
       </form>
 
       <div class="text-center mt-3">
-        <a href="excluir_conta.php" class="btn btn-custom" onclick="confirmarExclusao()">
+        <a href="excluir_conta.php" class="btn btn-custom" onclick="confirmar_exclusao()">
           Excluir minha conta
         </a>
       </div>
