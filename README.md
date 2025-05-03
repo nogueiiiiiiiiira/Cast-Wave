@@ -43,7 +43,7 @@
    - Instale o [XAMPP](https://www.apachefriends.org/index.html)
    - Inicie os módulos **Apache** e **MySQL**
 
-2. **database de Dados**
+2. **Database de Dados**
    - Acesse o `phpMyAdmin`
    - Crie um database de dados chamado `castwave`
    - Execute o script SQL abaixo para criar as tabelas:
