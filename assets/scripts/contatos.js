@@ -8,7 +8,7 @@ telefone.addEventListener("input", () => {
 });
 
 function validar_formulario() {
-    const form = document.getElementById("contato_form2"); // obtém o formulário
+    const form = document.getElementById("contato_form"); // obtém o formulário
     const inputs = form.querySelectorAll("input, textarea");  // pega todos os campos de input e textarea do formulário
 
     // verifica se algum campo está vazio
@@ -22,7 +22,7 @@ function validar_formulario() {
     return true;  // permite o envio do formulário
 }
 
-document.getElementById("contato_form2").addEventListener("submit", function (event) { // adiciona um evento de submit ao formulário
+document.getElementById("contato_form").addEventListener("submit", function (event) { // adiciona um evento de submit ao formulário
     // valida antes de submeter o formulário
     if (!validar_formulario()) { // se a validação falhar, não envia os dados
         event.preventDefault();  // impede o envio do formulário
@@ -38,7 +38,7 @@ document.getElementById("contato_form2").addEventListener("submit", function (ev
 });
 
 // Envia o formulário via AJAX
-document.getElementById('contato_form2').addEventListener('submit', e => {
+document.getElementById('contato_form').addEventListener('submit', e => {
     e.preventDefault();  // impede o envio normal do formulário
 
     // se a validação falhar, não envia os dados

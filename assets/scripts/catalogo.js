@@ -36,38 +36,57 @@ function mostrar_detalhes(idFilme, titulo, generos, resumo) {
     var api_key = "7d76651465970372fcd6d406b5b325ee";  
     var url = `https://api.themoviedb.org/3/movie/${idFilme}?api_key=${api_key}&language=pt-BR&append_to_response=videos`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            var releaseDate = data.release_date || 'Data não disponível';
-            var idade = data.adult ? '18+' : 'Livre';
-            var trailerUrl = data.videos && data.videos.results.length ? `https://www.youtube.com/watch?v=${data.videos.results[0].key}` : null;
+    var release_dates_url = `https://api.themoviedb.org/3/movie/${idFilme}/release_dates?api_key=${api_key}`;
 
-            // formatar a data de lançamento no formato DD-MM-YYYY
-            if (releaseDate !== 'Data não disponível') {
-                var dateParts = releaseDate.split('-');  
-                releaseDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;  // Formata para DD-MM-YYYY
+    Promise.all([ // busca os dados do filme e as datas de lançamento. promise serve para esperar as duas requisições serem concluídas
+        fetch(url).then(response => response.json()), // busca os dados do filme
+        fetch(release_dates_url).then(response => response.json()) // busca as datas de lançamento
+    ])
+    .then(([data, release_data]) => { // desestrutura o array de promessas resolvidas
+        var release_date = data.release_date || 'Data não disponível';
+        var idade = 'Não informada';
+
+        // Busca a classificação indicativa para o Brasil
+        if (release_data && release_data.results) {
+            var br_release = release_data.results.find(r => r.iso_3166_1 === 'BR'); // procura a data de lançamento do Brasil
+            if (br_release && br_release.release_dates && br_release.release_dates.length > 0) { // verifica se existem datas de lançamento
+                for (var i = 0; i < br_release.release_dates.length; i++) { // percorre as datas de lançamento
+                    var cert = br_release.release_dates[i].certification; // obtém a classificação indicativa
+                    if (cert && cert.trim() !== '') {  // verifica se a classificação não está vazia
+                        idade = cert; // atribui a classificação à variável idade
+                        break;
+                    }
+                }
             }
+        }
 
-            // atualiza os detalhes no modal
-            document.getElementById('modalTitulo').innerText = titulo;
-            document.getElementById('modalGeneros').innerText = generos;
-            document.getElementById('modalDataLancamento').innerText = releaseDate;
-            document.getElementById('modalIdade').innerText = idade;
-            
-            // atribui o resumo
-            var filmeResumo = data.overview || resumo || 'Resumo não disponível';
-            document.getElementById('modalResumo').innerText = filmeResumo;
+        var trailer_url = data.videos && data.videos.results.length ? `https://www.youtube.com/watch?v=${data.videos.results[0].key}` : null;
 
-            // exibe ou oculta o link do trailer
-            if (trailerUrl) {
-                document.getElementById('trailerLink').classList.remove('d-none');  // remove a classe d-none para mostrar o link
-                document.getElementById('trailerUrl').href = trailerUrl; // define o link do trailer
-            } else {
-                document.getElementById('trailerLink').classList.add('d-none');  // adiciona a classe d-none para ocultar o link
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao carregar detalhes:', error);
-        });
+        // formatar a data de lançamento no formato DD-MM-YYYY
+        if (release_date !== 'Data não disponível') {
+            var dateParts = release_date.split('-');  
+            release_date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;  // Formata para DD-MM-YYYY
+        }
+
+        // atualiza os detalhes no modal
+        document.getElementById('modal_titulo').innerText = titulo;
+        document.getElementById('modal_generos').innerText = generos;
+        document.getElementById('moda_lancamento').innerText = release_date;
+        document.getElementById('moda_idade').innerText = idade;
+        
+        // atribui o resumo
+        var filmeResumo = data.overview || resumo || 'Resumo não disponível';
+        document.getElementById('modal_resumo').innerText = filmeResumo;
+
+        // exibe ou oculta o link do trailer
+        if (trailer_url) {
+            document.getElementById('trailer_link').classList.remove('d-none');  // remove a classe d-none para mostrar o link
+            document.getElementById('trailer_url').href = trailer_url; // define o link do trailer
+        } else {
+            document.getElementById('trailer_link').classList.add('d-none');  // adiciona a classe d-none para ocultar o link
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao carregar detalhes:', error);
+    });
 }

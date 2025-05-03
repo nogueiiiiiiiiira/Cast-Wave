@@ -18,7 +18,7 @@ telefone.addEventListener("input", () => {
     telefone.value = value; // atualiza o valor do campo
 });
 
-document.getElementById('cadastroForm').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
+document.getElementById('cadastro_form').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
     e.preventDefault(); // previne o comportamento padrão do formulário
 
     const senha = document.getElementById('senha').value; // obtém senha

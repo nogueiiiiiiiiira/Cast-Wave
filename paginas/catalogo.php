@@ -239,16 +239,16 @@ function pagina_links($i, $pagina_atual, $pesquisa) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <h4 id="modalTitulo"></h4>
-                <p><strong>Gêneros:</strong> <span id="modalGeneros"></span></p>
-                <p><strong>Data de Lançamento:</strong> <span id="modalDataLancamento"></span></p>
-                <p><strong>Resumo:</strong> <span id="modalResumo"></span></p>
+                <h4 id="modal_titulo"></h4>
+                <p><strong>Gêneros:</strong> <span id="modal_generos"></span></p>
+                <p><strong>Data de Lançamento:</strong> <span id="moda_lancamento"></span></p>
+                <p><strong>Resumo:</strong> <span id="modal_resumo"></span></p>
 
-                <p id="trailerLink" class="d-none">
-                    <strong>Trailer:</strong> <a id="trailerUrl" href="#" target="_blank">Assistir no YouTube</a>
+                <p id="trailer_link" class="d-none">
+                    <strong>Trailer:</strong> <a id="trailer_url" href="#" target="_blank">Assistir no YouTube</a>
                 </p>
 
-                <p><strong>Classificação Indicativa:</strong> <span id="modalIdade"></span></p>
+                <p><strong>Classificação Indicativa:</strong> <span id="moda_idade"></span></p>
 
             </div>
         </div>

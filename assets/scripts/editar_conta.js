@@ -9,7 +9,7 @@ telefone.addEventListener("input", () => { // adiciona um evento de input ao cam
 
 
 function validar_formulario() {
-    const form = document.getElementById("form_conta"); // obtém o formulário
+    const form = document.getElementById("conta_form"); // obtém o formulário
     const inputs = form.querySelectorAll("input");  // pega todos os campos de input do formulário
 
     // verifica se algum campo está vazio
@@ -56,7 +56,7 @@ function validar_senha(senha) {
     return tamanho_minimo && letras && numeros && simbolos;
 }
 
-document.getElementById('form_conta').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
+document.getElementById('conta_form').addEventListener('submit', e => { // adiciona um evento de submit ao formulário
     e.preventDefault();  // impede o envio normal do formulário
 
     // valida o formulário antes de prosseguir

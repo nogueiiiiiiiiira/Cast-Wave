@@ -66,7 +66,7 @@ $conn->close();
 
     <br>
     <div class="card-body">
-    <form id="form_conta" action="../paginas/salvar_edicao.php" method="POST">
+    <form id="conta_form" action="../paginas/salvar_edicao.php" method="POST">
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
           <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu novo nome">
