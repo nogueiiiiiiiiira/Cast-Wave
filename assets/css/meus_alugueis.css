@@ -5,10 +5,6 @@ body {
     align-items: center;
 }
 
-.navbar {
-    padding: 10px 20px;
-}
-
 #navbarNav ul {
     transform: translateY(-0.5px);
     margin-left: -7.5px;

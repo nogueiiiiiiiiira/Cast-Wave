@@ -106,6 +106,7 @@ function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
         <p>Você não tem filmes alugados.</p>
     <?php else: ?> <!-- se o usuário tem filmes alugados, exibe os detalhes -->
       <div class="card-container">
+        <center>
         <div class="row">
             <?php foreach ($alugueis as $aluguel): 
                 // busca os detalhes do filme na API
@@ -129,6 +130,7 @@ function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
                 </div>
             <?php endforeach; ?>
         </div>
+    </center>
     <?php endif; ?>
 </div>
 </body>

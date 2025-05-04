@@ -121,36 +121,6 @@ CREATE TABLE IF NOT EXISTS contatos (
 
 ---
 
-## 📝 Fluxos Principais do Usuário
-
-- **Cadastro:** Acesse a página de cadastro, preencha os dados pessoais e crie uma senha segura. O sistema valida os dados e registra o usuário.
-- **Login:** Faça login com seu email e senha para acessar o catálogo e funcionalidades restritas.
-- **Navegação no Catálogo:** Explore os filmes disponíveis, utilize a busca e veja detalhes dos títulos.
-- **Aluguel de Filmes:** Selecione um filme e realize o aluguel, respeitando a classificação indicativa.
-- **Gerenciamento de Conta:** Edite seus dados pessoais e visualize seus aluguéis e recomendações personalizadas.
-- **Logout:** Encerre a sessão para proteger sua conta.
-
----
-
-## 🛠 Desenvolvimento e Contribuição
-
-- Clone o repositório.
-- Configure o ambiente local conforme as instruções.
-- Faça suas alterações em branches separadas.
-- Envie pull requests com descrições claras das mudanças.
-- Reporte bugs e sugira melhorias via issues.
-
----
-
-## 🚧 Limitações e Melhorias Futuras
-
-- Implementar sistema de pagamento para aluguéis.
-- Melhorar a interface com mais animações e responsividade.
-- Adicionar suporte a múltiplos idiomas.
-- Otimizar consultas ao banco de dados para maior desempenho.
-
----
-
 ## ⚠️ Dicas e Solução de Problemas
 
 - **Erro "Erro ao executar o modelo de IA"**:
