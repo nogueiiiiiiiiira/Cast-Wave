@@ -61,7 +61,7 @@ function buscar_recomendacoes() {
 
                                 let generos_array = filme.genre_ids.map(id => genero_map[id] || "Desconhecido");
                                 if (generos_array.length === 0 || generos_array.every(g => g === "Desconhecido")) {
-                                    generos_array = ["Desconhecido"];
+                                    generos_array = ["Gêneros não disponíveis"];
                                 }
                                 const generos = generos_array.join(", ");
 
