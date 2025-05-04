@@ -57,23 +57,16 @@ input[type="text"] {
     color: white;
 }
 
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+    padding: 10px;
 }
 
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-}
-
-.card {
-    width: 20rem;
+.card { 
+    width: 20rem; 
     height: 750px;
     display: flex;
     flex-direction: column;
@@ -109,6 +102,7 @@ input[type="text"] {
 }
 
 .card button {
+    align-self: center;
     background-color: #343a40;
     color: #28a745;
     border: 1px solid #28a745;
@@ -262,3 +256,4 @@ input[type="text"] {
 #trailer_link a:hover {
     color: #28a745; 
 }
+

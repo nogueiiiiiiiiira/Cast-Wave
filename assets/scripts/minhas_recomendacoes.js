@@ -22,8 +22,8 @@ function buscar_recomendacoes() {
     }, 200);
 
     const api_key = '7d76651465970372fcd6d406b5b325ee';
-    const baseUrl = 'https://api.themoviedb.org/3/search/movie?api_key=' + api_key + '&language=en-US&query=';
-    const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + api_key + '&language=en-US';
+    const baseUrl = 'https://api.themoviedb.org/3/search/movie?api_key=' + api_key + '&language=pt-BR&query=';
+    const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + api_key + '&language=pt-BR';
 
     fetch(genreUrl)
     .then(response => response.json())
@@ -58,12 +58,12 @@ function buscar_recomendacoes() {
                         const generos = filme.genre_ids.map(id => genreMap[id] || "Desconhecido").join(", ");
 
                         return `
-                            <div class="card" style="width: 18rem; margin: 10px; display: inline-block; vertical-align: top;">
+                        <div class="card-container">
+                            <div class="card">
                                 <img src="${imagem}" class="card-img-top" alt="${filme.title}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${filme.title}</h5>
-                                    <p class="card-text">Nota: ${nota}</p>
-                                    <p class="card-text">Gêneros: ${generos}</p>
+                                    <h4>${filme.title}</h4>
+                                    <p><strong>Gênero:</strong> ${generos}</p>
+                                    <p><strong>Nota do Público:</strong> ${nota}</p>
                                     <button type="button" 
                                         class="btn btn-custom me-4" 
                                         data-bs-toggle="modal"
@@ -76,17 +76,6 @@ function buscar_recomendacoes() {
                         `;
                     }
 
-                    function criarCardSimples(titulo) {
-                        return `
-                            <div class="card" style="width: 18rem; margin: 10px; display: inline-block; vertical-align: top; background-color: #f8d7da; color: #721c24;">
-                                <div class="card-body">
-                                    <p class="card-text">${titulo}</p>
-                                    <p><strong>TMDb:</strong> não</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-
                     let fetches = recs.map(titulo => {
                         return fetch(baseUrl + encodeURIComponent(titulo))
                             .then(response => response.json())
@@ -94,8 +83,6 @@ function buscar_recomendacoes() {
                                 if (data.results && data.results.length > 0) {
                                     const filme = data.results[0];
                                     cardsHtml += criarCardDetalhes(filme);
-                                } else {
-                                    cardsHtml += criarCardSimples(titulo.trim());
                                 }
                             })
                             .catch(error => {
@@ -134,44 +121,53 @@ function buscar_recomendacoes() {
 }
 
 function buscar_detalhes(filme_id) {
-    const api_key = '7d76651465970372fcd6d406b5b325ee';
+    const api_key = "7d76651465970372fcd6d406b5b325ee";
     const url = `https://api.themoviedb.org/3/movie/${filme_id}?api_key=${api_key}&language=pt-BR&append_to_response=videos`;
+    const release_dates_url = `https://api.themoviedb.org/3/movie/${filme_id}/release_dates?api_key=${api_key}`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const modalTitulo = document.getElementById('modal_titulo');
-            const modalGeneros = document.getElementById('modal_generos');
-            const modalLancamento = document.getElementById('modal_lancamento');
-            const modalResumo = document.getElementById('modal_resumo');
-            const modalIdade = document.getElementById('modal_idade');
-            const trailerSection = document.getElementById('trailer_link');
-            const trailerUrl = document.getElementById('trailer_url');
+    Promise.all([
+        fetch(url).then(response => response.json()),
+        fetch(release_dates_url).then(response => response.json())
+    ])
+    .then(([data, release_data]) => {
+        let release_date = data.release_date || 'Data não disponível';
+        let idade = 'Não informada';
 
-            if (!modalTitulo || !modalGeneros || !modalLancamento || !modalResumo || !modalIdade || !trailerSection || !trailerUrl) {
-                console.error('Elementos do modal não encontrados no DOM.');
-                return;
+        // Classificação indicativa para o Brasil
+        if (release_data && release_data.results) {
+            const br_release = release_data.results.find(r => r.iso_3166_1 === 'BR');
+            if (br_release && br_release.release_dates.length > 0) {
+                const cert = br_release.release_dates.find(rd => rd.certification && rd.certification.trim() !== '');
+                if (cert) idade = cert.certification;
             }
+        }
 
-            modalTitulo.textContent = data.title || 'Título não disponível';
-            const generos = data.genres ? data.genres.map(g => g.name).join(', ') : 'Gêneros não disponíveis';
-            modalGeneros.textContent = generos;
-            modalLancamento.textContent = data.release_date || 'Data não disponível';
-            modalResumo.textContent = data.overview || 'Resumo não disponível';
-            modalIdade.textContent = data.adult ? '18+' : 'Livre';
+        // Formatando data
+        if (release_date !== 'Data não disponível') {
+            const [ano, mes, dia] = release_date.split("-");
+            release_date = `${dia}-${mes}-${ano}`;
+        }
 
-            trailerSection.classList.add('d-none');
-            trailerUrl.href = '#';
+        // Trailer
+        const trailer_url = data.videos?.results?.[0]?.key 
+            ? `https://www.youtube.com/watch?v=${data.videos.results[0].key}` 
+            : null;
 
-            if (data.videos && data.videos.results) {
-                const trailer = data.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
-                if (trailer) {
-                    trailerUrl.href = `https://www.youtube.com/watch?v=${trailer.key}`;
-                    trailerSection.classList.remove('d-none');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao buscar detalhes do filme:', error);
-        });
+        // Atualizando os elementos no modal
+        document.getElementById('modal_titulo').innerText = data.title || "Título não disponível";
+        document.getElementById('modal_generos').innerText = data.genres?.map(g => g.name).join(", ") || "Gêneros não disponíveis";
+        document.getElementById('modal_lancamento').innerText = release_date;
+        document.getElementById('modal_idade').innerText = idade;
+        document.getElementById('modal_resumo').innerText = data.overview || "Resumo não disponível";
+
+        if (trailer_url) {
+            document.getElementById('trailer_link').classList.remove('d-none');
+            document.getElementById('trailer_url').href = trailer_url;
+        } else {
+            document.getElementById('trailer_link').classList.add('d-none');
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao carregar detalhes:', error);
+    });
 }

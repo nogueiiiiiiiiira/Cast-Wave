@@ -58,6 +58,8 @@ if ($conn->connect_error) {
             <br>
             <button onclick="buscar_recomendacoes()">Ver Recomendações</button>
         </div>
+        <br>
+        <br>
         <div id="resultado">
             <div id="progress-container">
                 <div id="progress-bar">
@@ -66,6 +68,28 @@ if ($conn->connect_error) {
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Filme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="modal_titulo"></h4>
+                <p><strong>Gêneros:</strong> <span id="modal_generos"></span></p>
+                <p><strong>Data de Lançamento:</strong> <span id="modal_lancamento"></span></p>
+                <p><strong>Resumo:</strong> <span id="modal_resumo"></span></p>
+                <p><strong>Classificação Indicativa:</strong> <span id="modal_idade"></span></p>
+                <p id="trailer_link" class="d-none">
+                    <strong>Trailer:</strong> <a id="trailer_url" href="#" target="_blank">Assistir no YouTube</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="../assets/scripts/minhas_recomendacoes.js"></script> <!-- importa o JS do minhas_recomendacoes -->
 

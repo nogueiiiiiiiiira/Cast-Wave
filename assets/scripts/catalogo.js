@@ -30,11 +30,11 @@ document.querySelectorAll('.alugar_form').forEach(form => { // seleciona todos o
     }});
 });
 
-function mostrar_detalhes(idFilme, titulo, generos, resumo) {
+function mostrar_detalhes(filme_id, titulo, generos, resumo) {
     var api_key = "7d76651465970372fcd6d406b5b325ee";  
-    var url = `https://api.themoviedb.org/3/movie/${idFilme}?api_key=${api_key}&language=pt-BR&append_to_response=videos`;
+    var url = `https://api.themoviedb.org/3/movie/${filme_id}?api_key=${api_key}&language=pt-BR&append_to_response=videos`;
 
-    var release_dates_url = `https://api.themoviedb.org/3/movie/${idFilme}/release_dates?api_key=${api_key}`;
+    var release_dates_url = `https://api.themoviedb.org/3/movie/${filme_id}/release_dates?api_key=${api_key}`;
 
     Promise.all([ // busca os dados do filme e as datas de lançamento. promise serve para esperar as duas requisições serem concluídas
         fetch(url).then(response => response.json()), // busca os dados do filme
