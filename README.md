@@ -135,10 +135,4 @@ CREATE TABLE IF NOT EXISTS contatos (
 
 ---
 
-## 📞 Contato
-
-Para dúvidas, sugestões ou contribuições, entre em contato com o desenvolvedor.
-
----
-
 Obrigado por usar o CastWave! 🎉

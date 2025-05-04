@@ -49,10 +49,23 @@ if ($conn->connect_error) {
     </div>
     </nav>
     
-    <h1>Recomendações de Filmes</h1>
-    <p>Clique no botão abaixo para ver recomendações com base nos filmes que você mais alugou:</p>
-    <button onclick="buscarRecomendacoes()">Ver Recomendações</button>
-    <div class="resultado" id="resultado"></div>
+    <div class="container pagina-conteudo">
+        <br>
+        <h4>Minhas Recomendações</h4>
+        <br>
+        <p>Baseado nos filmes que você mais alugou, aqui estão algumas recomendações:</p>
+        <div class="botao-centro">
+            <br>
+            <button onclick="buscar_recomendacoes()">Ver Recomendações</button>
+        </div>
+        <div id="resultado">
+            <div id="progress-container">
+                <div id="progress-bar">
+                    0%
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../assets/scripts/minhas_recomendacoes.js"></script> <!-- importa o JS do minhas_recomendacoes -->
 

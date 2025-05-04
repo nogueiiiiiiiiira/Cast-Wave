@@ -3,14 +3,19 @@ body {
     background-color: black;
 }
 
+.navbar {
+    padding: 10px 20px;
+}
+
 #navbarNav ul {
     transform: translateY(-0.5px);
+    margin-left: -7.5px;
 }
 
 #navbarNav ul li a {
     text-decoration: none;
     transition: color 0.3s;
-    margin: 19px 0;
+    margin: 20px 0;
 }
 
 #navbarNav ul li a:hover {

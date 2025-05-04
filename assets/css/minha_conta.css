@@ -11,7 +11,7 @@ body {
 #navbarNav ul li a {
     text-decoration: none;
     transition: color 0.3s;
-    margin: 19px 0;
+    margin: 22px 0;
 }
 
 #navbarNav ul li a:hover {
