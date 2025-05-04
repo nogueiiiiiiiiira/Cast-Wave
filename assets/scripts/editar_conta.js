@@ -64,7 +64,8 @@ document.getElementById('conta_form').addEventListener('submit', e => { // adici
         return;  // se a validação falhar, não envia os dados
     }
 
-    const form_data = new form_data(e.target);  // cria um objeto form_data com os dados do formulário
+    const form_data = new FormData(e.target);
+ // cria um objeto form_data com os dados do formulário
 
     fetch('../paginas/salvar_edicao.php', {  // envia os dados para o servidor
         method: 'POST',

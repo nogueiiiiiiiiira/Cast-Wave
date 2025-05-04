@@ -46,7 +46,8 @@ document.getElementById('contato_form').addEventListener('submit', e => {
         return;
     }
 
-    const form_data = new form_data(e.target);  // cria um objeto form_data com os dados do formulário
+    const form_data = new FormData(e.target);
+ // cria um objeto form_data com os dados do formulário
 
     fetch('../paginas/contatos.php', {  // envia os dados para o servidor
         method: 'POST',

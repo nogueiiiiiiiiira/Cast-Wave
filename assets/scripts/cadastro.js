@@ -38,7 +38,8 @@ document.getElementById('cadastro_form').addEventListener('submit', e => { // ad
 
     const data_formatada = formatar_data(data_nasc.value); // formata a data para o formato desejado
 
-    const form_data = new form_data(e.target); // cria um objeto form_data com os dados do formulário
+    const form_data = new FormData(e.target);
+// cria um objeto form_data com os dados do formulário
     form_data.set('data_nasc', data_formatada); // adiciona a data formatada ao form_data
 
     fetch('../paginas/cadastrar.php', { // envia os dados para o servidor

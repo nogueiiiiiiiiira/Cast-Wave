@@ -12,10 +12,10 @@ if (!isset($_SESSION['usuario_id'])) {
 // conexão com o database de dados 
 $host = "localhost"; 
 $usuario = "root";  
-$password = ""; 
+$senha = ""; 
 $database = "castwave";  
 
-$conn = new mysqli($host, $usuario, $password, $database);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {
@@ -84,12 +84,12 @@ $conn->close();
 
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-lock"></i></span>
-          <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua nova senha">
+          <input type="password" class="form-control" id="senha_nova" name="senha_nova" placeholder="Digite sua nova senha">
           </div>
 
         <div class="mb-3 input-group">
           <span class="input-group-text"><i class="fas fa-lock"></i></span>
-          <input type="password" class="form-control" id="senha2" name="senha2" placeholder="Confirme sua nova senha">
+          <input type="password" class="form-control" id="senha_confirmacao" name="senha_confirmacao" placeholder="Confirme sua nova senha">
         </div>
 
         <br>

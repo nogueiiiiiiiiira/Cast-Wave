@@ -12,10 +12,10 @@ if (!isset($_SESSION['usuario_id'])) {
 // conexão com o database de dados
 $host = "localhost";
 $usuario = "root";  
-$password = "";
+$senha = "";
 $database = "castwave";
 
-$conn = new mysqli($host, $usuario, $password, $database);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {

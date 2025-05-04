@@ -108,6 +108,7 @@ function pagina_links($i, $pagina_atual, $pesquisa) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- importa o JS do bootstrap -->
 
   <link rel="stylesheet" href="../assets/css/catalogo.css" /> <!-- importa o CSS do catalogo -->
+  <script src="../assets/scripts/logout.js"></script> <!-- importa o JS do logout -->
 </head>
 
 <body>
@@ -122,7 +123,7 @@ function pagina_links($i, $pagina_atual, $pesquisa) {
         <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="./minha_conta.php">Minha Conta</a></li>
         <li class="nav-item"><a class="nav-link" href="./meus_alugueis.php">Meus Aluguéis</a></li>
-        <li class="nav-item"><a class="nav-link" href="./logout.php">Sair</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="logout">Sair</a></li> 
       </ul>
       <form class="d-flex" method="get" action="">
         <input class="form-control me-2" type="search" name="busca" placeholder="Buscar filme..." value="<?php echo isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : ''; ?>">
@@ -137,7 +138,7 @@ function pagina_links($i, $pagina_atual, $pesquisa) {
 
 <h1>CastWave</h1>
 <br>
-<h4>Bem-vindo(a) novamente, <?php echo htmlspecialchars($usuario_nome); ?>!</h4> <!-- exibe o nome do usuário -->
+<h4>Bem-vindo(a), <?php echo htmlspecialchars($usuario_nome); ?>!</h4> <!-- exibe o nome do usuário -->
 
 <br>
 

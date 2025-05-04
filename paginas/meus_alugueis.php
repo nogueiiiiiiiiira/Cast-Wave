@@ -74,6 +74,7 @@ function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- importa o JS do bootstrap -->
 
   <link rel="stylesheet" href="../assets/css/meus_alugueis.css" /> <!-- importa o CSS do meus_alugueis -->
+  <script src="../assets/scripts/logout.js"></script> <!-- importa o JS do logout -->
 </head>
 <body>
 
@@ -84,10 +85,10 @@ function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">        
-      <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="./minha_conta.php">Minha Conta</a></li>
         <li class="nav-item"><a class="nav-link" href="./meus_alugueis.php">Meus Aluguéis</a></li>
-        <li class="nav-item"><a class="nav-link" href="./logout.php">Sair</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="logout">Sair</a></li>
       </ul>
     </div>
   </div>

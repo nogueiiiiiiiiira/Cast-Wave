@@ -21,10 +21,10 @@ if (ini_get("session.use_cookies")) {
 // conexão com o database de dados
 $host = "localhost";
 $usuario = "root";  
-$password = "";
+$senha = "";
 $database = "castwave";
 
-$conn = new mysqli($host, $usuario, $password, $database);
+$conn = new mysqli($host, $usuario, $senha, $database);
 if ($conn->connect_error) {
     echo "Falha na conexão: " . $conn->connect_error;
 }

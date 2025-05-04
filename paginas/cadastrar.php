@@ -10,7 +10,7 @@ $conn = new mysqli($host, $usuario, $senha, $database);
 
 // verifica se houve erro na conexão
 if ($conn->connect_error) {
-    echo "Erro na conexão: " . $conn->connect_error;
+    die("Erro na conexão: " . $conn->connect_error);
 }
 
 // recebe dados do formulário
@@ -22,7 +22,8 @@ $data_nasc = $_POST['data_nasc'];
 $senha = $_POST['senha'];
 
 // validação dos campos
-$data_nasc = DateTime::createFromFormat('Y-m-d', $data_nasc) ? $data_nasc : '0000-00-00'; // formata a data de nascimento para o padrão y-m-d
+$date = DateTime::createFromFormat('Y-m-d', $data_nasc);
+$data_nasc = $date ? $date->format('Y-m-d') : '0000-00-00';
 
 // verifica se os campos obrigatórios estão preenchidos
 $sql_verifica = "SELECT * FROM usuarios WHERE cpf = ? OR email = ? OR telefone = ?";

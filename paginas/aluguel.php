@@ -114,7 +114,7 @@ $idade_minima = verificar_idade_minima($classificacao);
 
 // verifica se o usuário tem idade suficiente para alugar o filme
 if ($idade < $idade_minima) {
-    echo "Erro: Você não tem idade suficiente para alugar este filme. Classificação indicativa: $classificacao.";
+    echo "Erro: Você não tem idade suficiente para alugar este filme. Classificação indicativa: $classificacao. O aluguel foi cancelado.";
     exit();
 }
 

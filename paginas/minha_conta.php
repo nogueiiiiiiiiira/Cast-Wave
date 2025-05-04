@@ -12,10 +12,10 @@ if (!isset($_SESSION['usuario_id'])) {
 // conexão com o database de dados 
 $host = "localhost"; 
 $usuario = "root";  
-$password = ""; 
+$senha = ""; 
 $database = "castwave";  
 
-$conn = new mysqli($host, $usuario, $password, $database);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 // verificação de conexão
 if ($conn->connect_error) {
@@ -59,6 +59,7 @@ if (!$usuario_telefone) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- importa o JS do bootstrap -->
 
   <link rel="stylesheet" href="../assets/css/minha_conta.css" /> <!-- importa o CSS do minha_conta -->
+  <script src="../assets/scripts/logout.js"></script> <!-- importa o JS do logout -->
 </head>
 <body>
 
@@ -69,10 +70,10 @@ if (!$usuario_telefone) {
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">        
-      <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="./minha_conta.php">Minha Conta</a></li>
         <li class="nav-item"><a class="nav-link" href="./meus_alugueis.php">Meus Aluguéis</a></li>
-        <li class="nav-item"><a class="nav-link" href="./logout.php">Sair</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="logout">Sair</a></li>
       </ul>
     </div>
   </div>

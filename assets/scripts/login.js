@@ -4,7 +4,7 @@ document.getElementById("login_form").addEventListener("submit", async function 
     const email = document.getElementById("email").value; // obtém o email
     const senha = document.getElementById("senha").value; // obtém a senha
 
-    const form_data = new form_data();
+    const form_data = new FormData();
     form_data.append("email", email); // adiciona o email ao form_data
     form_data.append("senha", senha); // adiciona a senha ao form_data
 

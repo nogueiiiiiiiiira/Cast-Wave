@@ -4,19 +4,17 @@ function confirmar_aluguel(nome_filme, preco) {
     return confirmar;
 }
 
-document.querySelectorAll('alugar_form').forEach(form => { // seleciona todos os formulários de aluguel
+document.querySelectorAll('.alugar_form').forEach(form => { // seleciona todos os formulários de aluguel
     form.addEventListener('submit', e => { // adiciona um evento de submit a cada formulário
         e.preventDefault(); // previne o comportamento padrão do formulário
 
         const nome_filme = e.target.elements['nome_filme'].value; // obtém o nome do filme
         const preco = e.target.elements['preco'].value; // obtém o preço do aluguel
 
-        if (!confirmar_aluguel(nome_filme, preco)) { // chama a função de confirmação
-            alert("Aluguel cancelado."); // exibe mensagem de cancelamento
-            return; // usuário cancelou
-        }
+        if (confirmar_aluguel(nome_filme, preco)) { // chama a função de confirmação
 
-        const form_data = new form_data(e.target); // cria um objeto form_data com os dados do formulário
+            const form_data = new FormData(e.target);
+        // cria um objeto form_data com os dados do formulário
 
         fetch('../paginas/aluguel.php', { // envia os dados para o servidor
             method: 'POST', 
@@ -29,7 +27,7 @@ document.querySelectorAll('alugar_form').forEach(form => { // seleciona todos os
             .catch(error => { // trata erros
                 alert("Erro ao processar o aluguel. Tente novamente mais tarde.");
             });
-    });
+    }});
 });
 
 function mostrar_detalhes(idFilme, titulo, generos, resumo) {
