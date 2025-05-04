@@ -73,6 +73,7 @@ if (!$usuario_telefone) {
         <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="./minha_conta.php">Minha Conta</a></li>
         <li class="nav-item"><a class="nav-link" href="./meus_alugueis.php">Meus Aluguéis</a></li>
+        <li class="nav-item"><a class="nav-link" href="./minhas_recomendacoes.php">Minhas Recomendações</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="logout">Sair</a></li>
       </ul>
     </div>

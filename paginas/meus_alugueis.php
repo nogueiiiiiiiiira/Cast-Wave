@@ -1,4 +1,6 @@
 <?php
+
+// inicia a sessão
 session_start();
 
 // verifica se o usuário está logado
@@ -88,6 +90,7 @@ function preco_aluguel($filme_id, $usuario_id, $data_inicio, $conn) {
         <li class="nav-item"><a class="nav-link" href="./catalogo.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="./minha_conta.php">Minha Conta</a></li>
         <li class="nav-item"><a class="nav-link" href="./meus_alugueis.php">Meus Aluguéis</a></li>
+        <li class="nav-item"><a class="nav-link" href="./minhas_recomendacoes.php">Minhas Recomendações</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="logout">Sair</a></li>
       </ul>
     </div>
