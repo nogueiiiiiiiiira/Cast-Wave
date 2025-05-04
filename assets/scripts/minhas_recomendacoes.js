@@ -1,7 +1,6 @@
 function buscar_recomendacoes() {
     const resultado = document.getElementById("resultado");
 
-    // Limpa o conteúdo anterior e adiciona a barra de progresso
     resultado.innerHTML = `
         <p>Carregando recomendações...</p>
         <div id="progress-container">
@@ -11,13 +10,9 @@ function buscar_recomendacoes() {
 
     const barra = document.getElementById("progress-bar");
     const container = document.getElementById("progress-container");
-
-    // Torna a barra visível assim que a busca começa
     container.style.visibility = 'visible';
 
     let progresso = 0;
-
-    // Simulação de progresso
     const intervalo = setInterval(() => {
         if (progresso < 95) {
             progresso += Math.random() * 5;
@@ -30,7 +25,6 @@ function buscar_recomendacoes() {
     const baseUrl = 'https://api.themoviedb.org/3/search/movie?api_key=' + api_key + '&language=en-US&query=';
     const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + api_key + '&language=en-US';
 
-    // Fetch genre list from TMDb API
     fetch(genreUrl)
     .then(response => response.json())
     .then(genreData => {
@@ -41,7 +35,6 @@ function buscar_recomendacoes() {
             });
         }
 
-        // Now fetch recommendations from backend
         fetch("../paginas/recomendacoes.php", {
             method: "POST",
         })
@@ -50,7 +43,7 @@ function buscar_recomendacoes() {
             clearInterval(intervalo);
             barra.style.width = "100%";
             barra.innerText = "100%";
-            barra.style.backgroundColor = "#28a745"; // Verde de sucesso
+            barra.style.backgroundColor = "#28a745";
 
             setTimeout(() => {
                 if (data.erro) {
@@ -59,7 +52,6 @@ function buscar_recomendacoes() {
                     const recs = data.recomendacoes.split('\n').filter(line => line.trim() !== '');
                     let cardsHtml = '';
 
-                    // Function to create card with movie details
                     function criarCardDetalhes(filme) {
                         const imagem = filme.poster_path ? 'https://image.tmdb.org/t/p/w500' + filme.poster_path : 'caminho/para/imagem/default.jpg';
                         const nota = filme.vote_average;
@@ -76,7 +68,7 @@ function buscar_recomendacoes() {
                                         class="btn btn-custom me-4" 
                                         data-bs-toggle="modal"
                                         data-bs-target="#detalhesModal"
-                                        onclick="buscar_detalhes(${filme.id})">
+                                        onclick="buscar_detalhes(${filme.id});">
                                         Detalhes
                                     </button>
                                 </div>
@@ -84,7 +76,6 @@ function buscar_recomendacoes() {
                         `;
                     }
 
-                    // Function to create simple card for titles not found in TMDb
                     function criarCardSimples(titulo) {
                         return `
                             <div class="card" style="width: 18rem; margin: 10px; display: inline-block; vertical-align: top; background-color: #f8d7da; color: #721c24;">
