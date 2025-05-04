@@ -53,11 +53,9 @@ if ($conn->connect_error) {
         <br>
         <h4>Minhas Recomendações</h4>
         <br>
-        <p>Baseado nos filmes que você mais alugou, aqui estão algumas recomendações:</p>
-        <div class="botao-centro">
-            <br>
-            <button onclick="buscar_recomendacoes()">Ver Recomendações</button>
-        </div>
+        <p>Baseado nos gêneros dos filmes que você mais alugou, aqui estão algumas recomendações:</p>
+        <br>
+        <button class="btn btn-custom me-4" onclick="buscar_recomendacoes()">Ver Recomendações</button>
         <br>
         <br>
         <div id="resultado">

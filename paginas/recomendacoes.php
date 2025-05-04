@@ -57,12 +57,12 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // verificação de dados obtidos
-error_log("Gêneros obtidos: " . implode(', ', $generos));  // Log dos gêneros
+error_log("Gêneros obtidos: " . implode(', ', $generos));  // log dos gêneros
 
 
 if (empty($generos)) {
     header('Content-Type: application/json');
-    echo json_encode(["erro" => "Nenhum dado encontrado para recomendações"]);
+    echo json_encode(["erro" => "Você não tem nenhum filme alugado. Logo, não possui nenhuma recomendação."]);
     exit();
 }
 
