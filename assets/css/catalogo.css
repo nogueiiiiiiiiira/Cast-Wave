@@ -102,7 +102,7 @@ input[type="text"] {
 }
 
 .card button {
-    align-self: center;
+    align-self: center; 
     background-color: #343a40;
     color: #28a745;
     border: 1px solid #28a745;
