@@ -44,6 +44,6 @@ $conn->close();
 session_destroy();
 
 // redireciona para página de login ou uma página de despedida
-header("Location: /projetoLocadora/html/login.html");
+header("Location: /cast-wave/html/login.html");
 exit();
 ?>

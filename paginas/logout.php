@@ -17,6 +17,6 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy(); // destrói a sessão
 
-header("Location: /projetoLocadora/html/login.html"); // redireciona para a página de login
+header("Location: /cast-wave/html/login.html"); // redireciona para a página de login
 exit;
 ?>

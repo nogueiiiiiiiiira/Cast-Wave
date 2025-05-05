@@ -37,7 +37,7 @@
 1. Inicie seu servidor local (ex: XAMPP).
 2. Acesse o endereço no navegador:
    ```
-   http://localhost/projetoLocadora/index.html
+   http://localhost/cast-wave/index.html
    ```
 
 ---

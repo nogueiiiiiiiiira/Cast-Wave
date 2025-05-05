@@ -5,7 +5,7 @@ session_start();
 
 // verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: /projetoLocadora/paginas/login.php'); 
+    header('Location: /cast-wave/paginas/login.php'); 
     exit();
 }
 
